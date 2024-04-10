@@ -2,6 +2,9 @@ import Hero from "../components/Hero"
 
 import useAuth from "../hooks/useAuth.js"
 import { useState, useRef } from "react"
+import { useProperties } from "../hooks/useProperties.js"
+
+const APIUrl = import.meta.env.VITE_API_URL
 
 export default function HomePage() {
     const { authRegister, authLogin } = useAuth()
@@ -13,6 +16,8 @@ export default function HomePage() {
 
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
+
+    const { properties } = useProperties()
 
     const fileInputRef = useRef()
 
@@ -47,6 +52,7 @@ export default function HomePage() {
     return (
         <>
             <Hero />
+            {/* Formulario de registro */}
             <form action="" onSubmit={registerSubmit}>
                 <h2>Registro</h2>
                 <div>
@@ -103,7 +109,7 @@ export default function HomePage() {
                 <button type="submit">Registro</button>
             </form>
             <h2>Login</h2>
-
+            {/* Formulario de login */}
             <form action="" onSubmit={logInSubmit}>
                 <div>
                     <input
@@ -121,6 +127,37 @@ export default function HomePage() {
                 </div>
                 <button type="submit">Inicia sesión</button>
             </form>
+            {/* Listado de propiedades */}
+            <section>
+                <div>
+                    <ul>
+                        {properties &&
+                            properties.map((property) => (
+                                <li key={property.id}>
+                                    <h2>{property.country}</h2>
+                                    <ul>
+                                        {property &&
+                                            property.property_images.map(
+                                                (image) => {
+                                                    return (
+                                                        <li key={image}>
+                                                            <img
+                                                                style={{
+                                                                    width: "100px",
+                                                                }}
+                                                                src={`${APIUrl}/${image}`}
+                                                                alt=""
+                                                            />
+                                                        </li>
+                                                    )
+                                                }
+                                            )}
+                                    </ul>
+                                </li>
+                            ))}
+                    </ul>
+                </div>
+            </section>
         </>
     )
 }
