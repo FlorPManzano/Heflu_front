@@ -21,8 +21,10 @@ function App() {
             <Routes>
                 {/* Rutas públicas */}
                 <Route path="/" element={<HomePage />} />
-                <Route path="/property/:id" element={<PropertyDetailsPage />} />
-                <Route path="/property/" element={<PropertyDetailsPage />} />
+                <Route
+                    path="/properties/:id"
+                    element={<PropertyDetailsPage />}
+                />
                 {/* Rutas privadas */}
                 <Route path="/profile/" element={<ViewUserProfilePage />} />
                 <Route

@@ -9,4 +9,12 @@ const getAllPropertiesService = async () => {
     return body
 }
 
-export { getAllPropertiesService }
+// Ver una propiedad en detalle
+const getPropertyDetailsService = async (id) => {
+    const res = await fetch(`${APIUrl}/properties/${id}`)
+    const body = await res.json()
+
+    return body
+}
+
+export { getAllPropertiesService, getPropertyDetailsService }
