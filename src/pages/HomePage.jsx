@@ -1,25 +1,28 @@
-import Hero from "../components/Hero"
-
-import useAuth from "../hooks/useAuth.js"
 import { useState, useRef } from "react"
+import { useNavigate } from "react-router-dom"
+import useAuth from "../hooks/useAuth.js"
 import { useProperties } from "../hooks/useProperties.js"
+
+// Importación de componentes
+import Hero from "../components/Hero"
 
 const APIUrl = import.meta.env.VITE_API_URL
 
 export default function HomePage() {
     const { authRegister, authLogin } = useAuth()
+    const { properties } = useProperties()
+
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [bio, setBio] = useState("")
     const [avatar, setAvatar] = useState(null)
+    const fileInputRef = useRef()
 
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
 
-    const { properties } = useProperties()
-
-    const fileInputRef = useRef()
+    const navigate = useNavigate()
 
     const registerSubmit = async (e) => {
         e.preventDefault()
@@ -47,6 +50,11 @@ export default function HomePage() {
         } catch (error) {
             console.log(error.message)
         }
+    }
+
+    const handleCardClick = async (e, key) => {
+        e.preventDefault()
+        navigate(`/properties/${key}`)
     }
 
     return (
@@ -133,7 +141,12 @@ export default function HomePage() {
                     <ul>
                         {properties &&
                             properties.map((property) => (
-                                <li key={property.id}>
+                                <li
+                                    key={property.id}
+                                    onClick={(event) =>
+                                        handleCardClick(event, property.id)
+                                    }
+                                >
                                     <h2>{property.country}</h2>
                                     <ul>
                                         {property &&
