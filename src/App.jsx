@@ -17,7 +17,6 @@ function App() {
     return (
         <>
             <Header />
-            <Footer />
             <Routes>
                 {/* Rutas públicas */}
                 <Route path="/" element={<HomePage />} />
@@ -41,6 +40,7 @@ function App() {
                 />
                 <Route path="*" element={<NotFoundPage />} />
             </Routes>
+            <Footer />
         </>
     )
 }
