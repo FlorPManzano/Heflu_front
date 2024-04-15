@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import useAuth from "../hooks/useAuth.js"
 import { useProperties } from "../hooks/useProperties.js"
 import { useFilterProperties } from "../hooks/useFilterProperties.js"
-
-import { getAllFilterPropertiesService } from "../services/propertiesServices.js"
 
 // Importación de componentes
 import Hero from "../components/Hero"
@@ -13,54 +11,52 @@ const APIUrl = import.meta.env.VITE_API_URL
 
 export default function HomePage() {
     const { properties } = useProperties()
-    const { filterProperties, setFilterProperties } = useFilterProperties()
+    const { filterProperties } = useFilterProperties()
     const [country, setCountry] = useState("")
     const navigate = useNavigate()
-    const params = useLocation().search
+    const location = useLocation()
 
-    // Sacar todas los distintos países
+    // Sacar los distintos países
     const allCountrys = properties.map((property) => property.country)
     const uniqueCountrys = [...new Set(allCountrys)]
+
+    const updateURL = (selectedCountry) => {
+        const searchParams = new URLSearchParams(location.search)
+        searchParams.set("country", selectedCountry)
+        navigate(`?${searchParams.toString()}`)
+    }
+
+    const handleSelectChange = (e) => {
+        const selectedCountry = e.target.value
+        setCountry(selectedCountry)
+        updateURL(selectedCountry)
+    }
 
     const handleCardClick = async (e, key) => {
         e.preventDefault()
         navigate(`/properties/${key}`)
     }
 
-    const handleFilterChange = (e) => {
-        e.preventDefault()
-    }
-
     return (
         <>
             <Hero />
 
-            {/* Listado de propiedades */}
             <section>
                 {/* Filtros */}
-                <form className="mb-6" action="" onSubmit={handleFilterChange}>
-                    <label htmlFor="">Selecciona un país: </label>
-                    <select
-                        name=""
-                        id=""
-                        value={country}
-                        defaultValue="Elige un destino"
-                        onChange={(e) => {
-                            setCountry(e.target.value)
-                        }}
-                    >
-                        <option selected value="Elige un destino">
-                            Elige un destino
-                        </option>
-                        {uniqueCountrys.map((country, index) => (
-                            <option key={index} value={country}>
+                <label htmlFor="">
+                    Selecciona un destino:
+                    <select value={country} onChange={handleSelectChange}>
+                        <option value="">Todos</option>
+                        {uniqueCountrys.map((country) => (
+                            <option key={country} value={country}>
                                 {country}
                             </option>
                         ))}
                     </select>
-                </form>
+                </label>
                 <div>
-                    <ul className="grid grid-cols-4">
+                    {/* Listado de propiedades */}
+                    <ul className="grid grid-cols-4 mb-10">
                         {filterProperties &&
                             filterProperties.map((property) => (
                                 <li
