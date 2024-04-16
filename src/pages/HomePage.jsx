@@ -6,6 +6,8 @@ import { useFilterProperties } from "../hooks/useFilterProperties.js"
 
 // Importación de componentes
 import Hero from "../components/Hero"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 const APIUrl = import.meta.env.VITE_API_URL
 
@@ -15,6 +17,8 @@ export default function HomePage() {
     const [country, setCountry] = useState("")
     const [minRooms, setMinRooms] = useState("")
     const [maxPrice, setMaxPrice] = useState("")
+    const [startDate, setStartDate] = useState("")
+    const [endDate, setEndDate] = useState("")
     const navigate = useNavigate()
     const location = useLocation()
 
@@ -22,7 +26,23 @@ export default function HomePage() {
     const allCountrys = properties.map((property) => property.country)
     const uniqueCountrys = [...new Set(allCountrys)]
 
-    const updateURL = (selectedCountry, selectedPrice, selectedRooms) => {
+    // Formatear fecha a yyyy-mm-dd
+    const formatDate = (date) => {
+        const newDate = new Date(date)
+        const year = newDate.getFullYear()
+        const month = (newDate.getMonth() + 1).toString().padStart(2, "0")
+        const day = newDate.getDate().toString().padStart(2, "0")
+        return `${year}-${month}-${day}`
+    }
+
+    // Función para actualizar los params dependiendo de los filtros
+    const updateURL = (
+        selectedCountry,
+        selectedPrice,
+        selectedRooms,
+        selectedStartDate,
+        selectedEndDate
+    ) => {
         const searchParams = new URLSearchParams(location.search)
         selectedCountry !== ""
             ? searchParams.set("country", selectedCountry)
@@ -33,6 +53,14 @@ export default function HomePage() {
         selectedRooms !== ""
             ? searchParams.set("minRooms", selectedRooms)
             : searchParams.delete("minRooms")
+        navigate(`?${searchParams.toString()}`)
+        selectedStartDate !== ""
+            ? searchParams.set("startDate", selectedStartDate)
+            : searchParams.delete("startDate")
+        navigate(`?${searchParams.toString()}`)
+        selectedEndDate !== ""
+            ? searchParams.set("endDate", selectedEndDate)
+            : searchParams.delete("endDate")
         navigate(`?${searchParams.toString()}`)
     }
 
@@ -52,6 +80,15 @@ export default function HomePage() {
         const selectedPrice = e.target.value
         setMaxPrice(selectedPrice)
         updateURL(country, selectedPrice, minRooms)
+    }
+
+    const handleSelectChangeDates = (dates) => {
+        const [start, end] = dates
+        const startFormatted = formatDate(start)
+        const endFormatted = formatDate(end)
+        setStartDate(start)
+        setEndDate(end)
+        updateURL(country, maxPrice, minRooms, startFormatted, endFormatted)
     }
 
     const handleCardClick = async (e, key) => {
@@ -86,12 +123,10 @@ export default function HomePage() {
                         onChange={handleSelectChangeMaxPrice}
                     >
                         <option value="">Todos</option>
-                        <option value="50">0-50</option>
-                        <option value="100">51-100</option>
-                        <option value="150">101-150</option>
-                        <option value="200">151-200</option>
-                        <option value="300">201-300</option>
-                        <option value="999999">+300</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="150">150</option>
+                        <option value="999999">+200</option>
                     </select>
                 </label>
                 <label htmlFor="">
@@ -107,6 +142,18 @@ export default function HomePage() {
                         <option value="4">4 o más</option>
                     </select>
                 </label>
+                <DatePicker
+                    selected={startDate}
+                    onChange={handleSelectChangeDates}
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={new Date()}
+                    selectsRange
+                    selectsDisabledDaysInRange
+                    placeholderText="Selecciona un rango de fechas"
+                    showIcon
+                    className="text-primary"
+                />
                 <div>
                     {/* Listado de propiedades */}
                     <ul className="grid grid-cols-4 my-10">
@@ -119,6 +166,7 @@ export default function HomePage() {
                                     }
                                 >
                                     <h2>{property.country}</h2>
+                                    <h2>{property.id}</h2>
                                     <h4>{property.bedrooms} habitaciones</h4>
                                     <h5>{property.price} €</h5>
                                     <ul>
