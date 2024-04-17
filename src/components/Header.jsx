@@ -119,7 +119,7 @@ const Header = () => {
                     </button>
                     <img
                         className="rounded-full w-14 cursor-pointer"
-                        src={`${APIUrl}/${authUser.data.user.avatar}`}
+                        src={`${APIUrl}/${authUser.avatar}`}
                         alt="Avatar"
                         onClick={handleClick}
                     />

@@ -31,9 +31,7 @@ export const AuthProvider = ({ children }) => {
                 )
 
                 // Establecemos el valor del usuario.
-                setAuthUser(body)
-
-                console.log("info del user", body)
+                setAuthUser(body.data.user)
             } catch (err) {
                 console.log(err.message)
             } finally {
@@ -68,9 +66,6 @@ export const AuthProvider = ({ children }) => {
             setLoading(true)
 
             const body = await loginUserService(email, password)
-            console.log("aqui llega?", body)
-
-            console.log("token", await body.data.token)
 
             if (body.status === "error") {
                 console.log(body.message)
