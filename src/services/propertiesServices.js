@@ -9,6 +9,15 @@ const getAllPropertiesService = async () => {
     return body
 }
 
+// Ver todas las propiedades filtradas
+const getAllFilterPropertiesService = async (params) => {
+    const res = await fetch(`${APIUrl}/properties?${params}`)
+
+    const body = await res.json()
+
+    return body
+}
+
 // Ver una propiedad en detalle
 const getPropertyDetailsService = async (id) => {
     const res = await fetch(`${APIUrl}/properties/${id}`)
@@ -17,4 +26,8 @@ const getPropertyDetailsService = async (id) => {
     return body
 }
 
-export { getAllPropertiesService, getPropertyDetailsService }
+export {
+    getAllPropertiesService,
+    getAllFilterPropertiesService,
+    getPropertyDetailsService,
+}
