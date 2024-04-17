@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react"
+import { useNavigate, Link } from "react-router-dom"
 import Logo from "/heflu-logo.svg"
 import Modal from "react-modal"
 import { IoCloseOutline } from "react-icons/io5"
+import useAuth from "../hooks/useAuth"
+const APIUrl = import.meta.env.VITE_API_URL
+
+import Menu from "@mui/material/Menu"
+import MenuItem from "@mui/material/MenuItem"
+
 // Importación de formularios
 import RegisterModal from "./modals/RegisterModal"
 import LoginModal from "./modals/LoginModal"
@@ -15,9 +22,47 @@ const modalStyles = {
 }
 
 const Header = () => {
+    const { authToken, authUser, authLogout } = useAuth()
     const [navIsActive, setNavIsActive] = useState(false)
     const [registerModal, setRegisterModal] = useState(false)
     const [loginModal, setLoginModal] = useState(false)
+
+    const navigate = useNavigate()
+
+    const [anchorEl, setAnchorEl] = useState(null)
+    const open = Boolean(anchorEl)
+
+    const handleClickProfile = () => {
+        navigate("/profile")
+        handleClose()
+    }
+
+    const handleClickRentings = () => {
+        navigate("/profile/rentings")
+        handleClose()
+    }
+
+    const handleClickRequests = () => {
+        navigate("/profile/requests")
+        handleClose()
+    }
+
+    const handleClickReviews = () => {
+        navigate("/profile/reviews")
+        handleClose()
+    }
+
+    const handleClickLogout = () => {
+        authLogout()
+        handleClose()
+    }
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget)
+    }
+    const handleClose = () => {
+        setAnchorEl(null)
+    }
 
     const openRegisterModal = () => {
         setRegisterModal(true)
@@ -46,22 +91,63 @@ const Header = () => {
                 navIsActive ? "bg-white/80 shadow-md" : "bg-none"
             } fixed top-0 w-full transition-all py-4 px-6 flex justify-between items-center`}
         >
-            <img src={Logo} alt="Heflu logo" className="h-10 lg:h-16" />
+            <Link to="/">
+                <img src={Logo} alt="Heflu logo" className="h-10 lg:h-16" />
+            </Link>
 
-            <nav className="flex items-center justify-between gap-1 lg:gap-4">
-                <button
-                    className="text-violet-700 border border-violet-700 px-2 py-1 text-sm lg:px-4 lg:py-2 lg:text-md rounded-lg mr-4 hover:shadow-lg transition-shadow duration-300 ease-in-out capitalize"
-                    onClick={openLoginModal}
-                >
-                    Inicia sesión
-                </button>
-                <button
-                    className="bg-violet-700 border border-violet-700 text-white px-2 py-1 text-sm lg:px-4 lg:py-2 lg:text-md rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out"
-                    onClick={openRegisterModal}
-                >
-                    Regístrate
-                </button>
-            </nav>
+            {!authToken && (
+                <nav className="flex items-center justify-between gap-1 lg:gap-4">
+                    <button
+                        className="text-violet-700 font-medium text-sm lg:text-md rounded-lg mr-4 hover:underline transition duration-300 ease-in-out capitalize"
+                        onClick={openLoginModal}
+                    >
+                        Inicia sesión
+                    </button>
+                    <button
+                        className="bg-violet-700 border border-violet-700 font-normal text-white px-2 py-1 text-sm lg:px-4 lg:py-2 lg:text-md rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out"
+                        onClick={openRegisterModal}
+                    >
+                        Regístrate
+                    </button>
+                </nav>
+            )}
+
+            {authUser && (
+                <nav className="flex items-center justify-between gap-1 lg:gap-4">
+                    <button className="text-violet-700 font-medium text-sm lg:text-md rounded-lg mr-4 hover:underline transition duration-300 ease-in-out capitalize">
+                        Publicar Alquiler
+                    </button>
+                    <img
+                        className="rounded-full w-14 cursor-pointer"
+                        src={`${APIUrl}/${authUser.data.user.avatar}`}
+                        alt="Avatar"
+                        onClick={handleClick}
+                    />
+                </nav>
+            )}
+
+            <Menu
+                id="basic-menu"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                }}
+            >
+                <MenuItem onClick={handleClickProfile}>Ver perfil</MenuItem>
+                <MenuItem onClick={handleClickRentings}>
+                    Mis alquileres
+                </MenuItem>
+                <MenuItem onClick={handleClickRequests}>
+                    Solicitudes de alquiler
+                </MenuItem>
+                <MenuItem onClick={handleClickReviews}>
+                    Valoraciones pendientes
+                </MenuItem>
+                <MenuItem onClick={handleClickLogout}>Cerrar sesión</MenuItem>
+            </Menu>
+
             {registerModal && (
                 <Modal
                     isOpen={registerModal}
