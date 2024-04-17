@@ -67,19 +67,19 @@ export default function HomePage() {
     const handleSelectChangeCountry = (e) => {
         const selectedCountry = e.target.value
         setCountry(selectedCountry)
-        updateURL(selectedCountry, maxPrice, minRooms)
+        updateURL(selectedCountry, maxPrice, minRooms, startDate, endDate)
     }
 
     const handleSelectChangeMinRooms = (e) => {
         const selectedRooms = e.target.value
         setMinRooms(selectedRooms)
-        updateURL(country, maxPrice, selectedRooms)
+        updateURL(country, maxPrice, selectedRooms, startDate, endDate)
     }
 
     const handleSelectChangeMaxPrice = (e) => {
         const selectedPrice = e.target.value
         setMaxPrice(selectedPrice)
-        updateURL(country, selectedPrice, minRooms)
+        updateURL(country, selectedPrice, minRooms, startDate, endDate)
     }
 
     const handleSelectChangeDates = (dates) => {
@@ -89,6 +89,15 @@ export default function HomePage() {
         setStartDate(start)
         setEndDate(end)
         updateURL(country, maxPrice, minRooms, startFormatted, endFormatted)
+    }
+
+    const handleClearFilters = () => {
+        setStartDate(null)
+        setEndDate(null)
+        setCountry("")
+        setMaxPrice("")
+        setMinRooms("")
+        updateURL("", "", "", "", "")
     }
 
     const handleCardClick = async (e, key) => {
@@ -154,6 +163,13 @@ export default function HomePage() {
                     showIcon
                     className="text-primary"
                 />
+
+                <button
+                    className="bg-violet-700 border border-violet-700 text-white px-2 py-1 text-sm lg:px-4 lg:py-2 lg:text-md rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out"
+                    onClick={handleClearFilters}
+                >
+                    Limpiar filtros
+                </button>
                 <div>
                     {/* Listado de propiedades */}
                     <ul className="grid grid-cols-4 my-10">
