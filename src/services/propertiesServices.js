@@ -12,7 +12,9 @@ const getAllPropertiesService = async () => {
 // Ver todas las propiedades filtradas
 const getAllFilterPropertiesService = async (params) => {
     const res = await fetch(`${APIUrl}/properties?${params}`)
-
+    if (res.status !== 200) {
+        return
+    }
     const body = await res.json()
 
     return body

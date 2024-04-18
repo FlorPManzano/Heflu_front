@@ -12,7 +12,7 @@ export const useFilterProperties = () => {
             try {
                 setLoading(true)
                 const body = await getAllFilterPropertiesService(searchParams)
-                setFilterProperties(body.data)
+                setFilterProperties(body?.data)
             } catch (err) {
                 console.log(err.message)
             } finally {
