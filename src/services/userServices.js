@@ -54,9 +54,23 @@ const getUserProfileService = async (token, id) => {
     return body
 }
 
+// Ver todas las valoraciones de un usuario
+const getUserReviewsProfileService = async (token, id) => {
+    const res = await fetch(`${APIUrl}/users/reviews/${id}`, {
+        headers: {
+            Authorization: token,
+        },
+    })
+
+    const body = await res.json()
+
+    return body
+}
+
 export {
     registerUserService,
     validateUserService,
     loginUserService,
     getUserProfileService,
+    getUserReviewsProfileService,
 }
