@@ -8,7 +8,7 @@ import { useFilterProperties } from "../hooks/useFilterProperties.js"
 import Hero from "../components/Hero"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-
+import PropertyCard from "../components/PropertyCard.jsx"
 const APIUrl = import.meta.env.VITE_API_URL
 
 export default function HomePage() {
@@ -172,7 +172,7 @@ export default function HomePage() {
                 </button>
                 <div>
                     {/* Listado de propiedades */}
-                    <ul className="grid grid-cols-4 my-10">
+                    <ul className="flex flex-wrap justify-center gap-4 my-10">
                         {filterProperties && filterProperties.length > 0 ? (
                             filterProperties.map((property) => (
                                 <li
@@ -181,28 +181,9 @@ export default function HomePage() {
                                         handleCardClick(event, property.id)
                                     }
                                 >
-                                    <h2>{property.country}</h2>
-                                    <h2>{property.id}</h2>
-                                    <h4>{property.bedrooms} habitaciones</h4>
-                                    <h5>{property.price} €</h5>
-                                    <ul>
-                                        {property &&
-                                            property.property_images.map(
-                                                (image) => {
-                                                    return (
-                                                        <li key={image}>
-                                                            <img
-                                                                style={{
-                                                                    width: "100px",
-                                                                }}
-                                                                src={`${APIUrl}/${image}`}
-                                                                alt=""
-                                                            />
-                                                        </li>
-                                                    )
-                                                }
-                                            )}
-                                    </ul>
+                                    <PropertyCard
+                                        property={property}
+                                    ></PropertyCard>
                                 </li>
                             ))
                         ) : (
