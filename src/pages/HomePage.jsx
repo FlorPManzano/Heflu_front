@@ -1,6 +1,5 @@
 import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import useAuth from "../hooks/useAuth.js"
 import { useProperties } from "../hooks/useProperties.js"
 import { useFilterProperties } from "../hooks/useFilterProperties.js"
 
@@ -8,8 +7,7 @@ import { useFilterProperties } from "../hooks/useFilterProperties.js"
 import Hero from "../components/Hero"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
-import PropertyCard from "../components/PropertyCard.jsx"
-const APIUrl = import.meta.env.VITE_API_URL
+import ListPropertiesCards from "../components/ListPropertiesCards.jsx"
 
 export default function HomePage() {
     const { properties } = useProperties()
@@ -170,29 +168,19 @@ export default function HomePage() {
                 >
                     Limpiar filtros
                 </button>
-                <div>
-                    {/* Listado de propiedades */}
-                    <ul className="flex flex-wrap justify-center gap-4 my-10">
-                        {filterProperties && filterProperties.length > 0 ? (
-                            filterProperties.map((property) => (
-                                <li
-                                    key={property.id}
-                                    onClick={(event) =>
-                                        handleCardClick(event, property.id)
-                                    }
-                                >
-                                    <PropertyCard
-                                        property={property}
-                                    ></PropertyCard>
-                                </li>
-                            ))
-                        ) : (
-                            <li className="">
-                                No hay propiedades con estos filtros.
-                            </li>
-                        )}
-                    </ul>
-                </div>
+                <section className=" flex-col justify-center items-center min-h-40 mt-5">
+                    {filterProperties?.length > 0 ? (
+                        <ListPropertiesCards
+                            properties={filterProperties}
+                            handleCardClick={handleCardClick}
+                        />
+                    ) : (
+                        <p className="grow text-2xl text-center">
+                            Uy, parece que no hay ninguna propiedad disponible
+                            con esos filtros 😅
+                        </p>
+                    )}
+                </section>
             </section>
         </>
     )
