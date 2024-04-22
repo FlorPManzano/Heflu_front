@@ -28,8 +28,23 @@ const getPropertyDetailsService = async (id) => {
     return body
 }
 
+const addPropertyService = async (token, propertyForm) => {
+    const res = await fetch(`${APIUrl}/properties`, {
+        method: "POST",
+        headers: {
+            Authorization: token,
+        },
+        body: propertyForm,
+    })
+    const body = await res.json()
+    console.log("body", body)
+
+    return body
+}
+
 export {
     getAllPropertiesService,
     getAllFilterPropertiesService,
     getPropertyDetailsService,
+    addPropertyService,
 }
