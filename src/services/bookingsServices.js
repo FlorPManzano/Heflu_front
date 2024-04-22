@@ -7,10 +7,29 @@ const getBookingsService = async (token) => {
             Authorization: token,
         },
     })
-
     const body = await res.json()
 
     return body
 }
 
-export { getBookingsService }
+// Crear una reserva
+const addBookingService = async (
+    token,
+    property_id,
+    starting_date,
+    ending_date
+) => {
+    const res = await fetch(`${APIUrl}/bookings`, {
+        method: "POST",
+        headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: property_id, starting_date, ending_date }),
+    })
+    const body = await res.json()
+
+    return body
+}
+
+export { getBookingsService, addBookingService }
