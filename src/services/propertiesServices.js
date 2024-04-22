@@ -37,7 +37,6 @@ const addPropertyService = async (token, propertyForm) => {
         body: propertyForm,
     })
     const body = await res.json()
-    console.log("body", body)
 
     return body
 }
