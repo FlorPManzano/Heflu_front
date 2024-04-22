@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react"
-import { getBookingsService } from "../services/bookingsServices"
+import {
+    getBookingsService,
+    addBookingService,
+} from "../services/bookingsServices"
 import useAuth from "./useAuth"
 
 export const useBookings = () => {
@@ -24,8 +27,26 @@ export const useBookings = () => {
         getBookings()
     }, [authToken, authUser])
 
+    // Función para crear reservas
+    const addBooking = async (propertyId, startDate, endDate) => {
+        setLoading(true)
+        try {
+            const body = await addBookingService(
+                authToken,
+                propertyId,
+                startDate,
+                endDate
+            )
+        } catch (err) {
+            console.log(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return {
         bookings,
         loading,
+        addBooking,
     }
 }
