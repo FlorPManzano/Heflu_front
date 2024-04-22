@@ -1,9 +1,14 @@
 import { useEffect, useState } from "react"
-import { getAllPropertiesService } from "../services/propertiesServices"
+import {
+    getAllPropertiesService,
+    addPropertyService,
+} from "../services/propertiesServices"
+import useAuth from "./useAuth"
 
 export const useProperties = () => {
     const [properties, setProperties] = useState([])
     const [loading, setLoading] = useState(false)
+    const { authToken } = useAuth()
 
     useEffect(() => {
         const fetchProperties = async () => {
@@ -20,8 +25,21 @@ export const useProperties = () => {
         fetchProperties()
     }, [])
 
+    // Función para añadir propiedades
+    const addProperty = async (formData) => {
+        setLoading(true)
+        try {
+            const body = await addPropertyService(authToken, formData)
+        } catch (err) {
+            console.log(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return {
         properties,
         loading,
+        addProperty,
     }
 }
