@@ -32,4 +32,37 @@ const addBookingService = async (
     return body
 }
 
-export { getBookingsService, addBookingService }
+// Aceptar una reserva
+const confirmBookingService = async (token, id) => {
+    const res = await fetch(`${APIUrl}/bookings/${id}`, {
+        method: "PUT",
+        headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+        },
+    })
+    const body = await res.json()
+
+    return body
+}
+
+// Rechazar una reserva
+const cancelBookingService = async (token, id) => {
+    const res = await fetch(`${APIUrl}/bookings/${id}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+        },
+    })
+    const body = await res.json()
+
+    return body
+}
+
+export {
+    getBookingsService,
+    addBookingService,
+    confirmBookingService,
+    cancelBookingService,
+}
