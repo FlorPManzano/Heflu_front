@@ -2,6 +2,8 @@ import { useEffect, useState } from "react"
 import {
     getBookingsService,
     addBookingService,
+    confirmBookingService,
+    cancelBookingService,
 } from "../services/bookingsServices"
 import useAuth from "./useAuth"
 
@@ -25,7 +27,7 @@ export const useBookings = () => {
             }
         }
         getBookings()
-    }, [authToken, authUser])
+    }, [authToken, authUser, bookings])
 
     // Función para crear reservas
     const addBooking = async (propertyId, startDate, endDate) => {
@@ -44,9 +46,34 @@ export const useBookings = () => {
         }
     }
 
+    // Función para aceptar reservas
+    const acceptBooking = async (bookingId) => {
+        setLoading(true)
+        try {
+            const body = await confirmBookingService(authToken, bookingId)
+        } catch (err) {
+            console.log(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+    // Función para rechazar reservas
+    const cancelBooking = async (bookingId) => {
+        setLoading(true)
+        try {
+            const body = await cancelBookingService(authToken, bookingId)
+        } catch (err) {
+            console.log(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return {
         bookings,
         loading,
         addBooking,
+        acceptBooking,
+        cancelBooking,
     }
 }
