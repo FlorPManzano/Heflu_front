@@ -39,11 +39,6 @@ const Header = () => {
         handleClose()
     }
 
-    const handleClickRentings = () => {
-        navigate("/profile/rentings")
-        handleClose()
-    }
-
     const handleClickRequests = () => {
         navigate("/profile/requests")
         handleClose()
@@ -148,9 +143,6 @@ const Header = () => {
                 }}
             >
                 <MenuItem onClick={handleClickProfile}>Ver perfil</MenuItem>
-                <MenuItem onClick={handleClickRentings}>
-                    Mis alquileres
-                </MenuItem>
                 <MenuItem onClick={handleClickRequests}>
                     Solicitudes de alquiler
                 </MenuItem>

@@ -2,7 +2,6 @@ import { Routes, Route } from "react-router-dom"
 
 // Importación de páginas
 import HomePage from "./pages/HomePage"
-import ActiveRentingsPage from "./pages/ActiveRentingsPage"
 import PendingRequestsPage from "./pages/PendingRequestsPage"
 import PendingReviewsPage from "./pages/PendingReviewsPage"
 import PropertyDetailsPage from "./pages/PropertyDetailsPage"
@@ -26,10 +25,6 @@ function App() {
                 />
                 {/* Rutas privadas */}
                 <Route path="/profile/" element={<ViewUserProfilePage />} />
-                <Route
-                    path="/profile/rentings"
-                    element={<ActiveRentingsPage />}
-                />
                 <Route
                     path="/profile/reviews"
                     element={<PendingReviewsPage />}
