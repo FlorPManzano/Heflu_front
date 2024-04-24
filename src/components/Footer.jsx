@@ -10,7 +10,7 @@ const Footer = () => {
         },
     ]
     return (
-        <footer className="bg-primary text-white py-6 w-full z-40 max-h-[520px]">
+        <footer className="bg-primary absolut left-0 bottom-0 text-white py-6 w-full z-40 min-h-[200px]">
             <section className="max-w-7xl mx-auto px-4 gap-y-5 lg:px-8 flex flex-col justify-center items-center lg:flex-row lg:items-start lg:justify-between">
                 <article className="flex flex-col gap-y-4 justify-center items-center lg:items-start">
                     <p className="capitalize text-sm font-medium">

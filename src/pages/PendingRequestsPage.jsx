@@ -57,7 +57,7 @@ export default function PendingRequestsPage() {
     }
 
     return (
-        <section className="mt-32 mb-10 mx-6 text-primary">
+        <section className="mt-32 mb-10 mx-6 min-h-screen text-primary">
             <h2 className="text-xl text-violet-700 font-bold border-b border-primary/80 pb-2 mb-4 tracking-wide capitalize">
                 Mis solicitudes pendientes
             </h2>

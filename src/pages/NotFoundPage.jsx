@@ -8,7 +8,7 @@ export default function NotFoundPage() {
         navigate("/")
     }
     return (
-        <section className="mt-32 mb-10 mx-6 text-primary flex justify-around items-center">
+        <section className="mt-10 mb-10 mx-6 min-h-screen text-primary flex justify-around items-center">
             <div>
                 <h1 className="text-9xl font-bold mb-12">¡Uy!</h1>
                 <h2 className="text-4xl font-semibold mb-12"> Error 404</h2>
