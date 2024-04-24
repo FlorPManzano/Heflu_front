@@ -8,6 +8,7 @@ import useAuth from "./useAuth"
 export const useReviews = () => {
     const [reviews, setReviews] = useState({})
     const [loading, setLoading] = useState(false)
+    const [flag, setFlag] = useState(false)
     const { authUser, authToken } = useAuth()
 
     useEffect(() => {
@@ -25,7 +26,7 @@ export const useReviews = () => {
             }
         }
         getReviews()
-    }, [authToken, authUser])
+    }, [authToken, authUser, flag])
 
     // Función para crear reseñas
     const addReview = async (bookingId, rating, comment) => {
@@ -37,6 +38,7 @@ export const useReviews = () => {
                 rating,
                 comment
             )
+            setFlag(!flag)
         } catch (err) {
             console.log(err.message)
         } finally {
