@@ -7,7 +7,7 @@ import PendingReviewsPage from "./pages/PendingReviewsPage"
 import PropertyDetailsPage from "./pages/PropertyDetailsPage"
 import ViewUserProfilePage from "./pages/ViewUserProfilePage"
 import NotFoundPage from "./pages/NotFoundPage"
-
+import ActivateUserPage from "./pages/ActivateUserPage"
 // Importación de componentes
 import Header from "./components/Header"
 import Footer from "./components/Footer"
@@ -24,6 +24,7 @@ function App() {
                     path="/properties/:id"
                     element={<PropertyDetailsPage />}
                 />
+                <Route path="/users/activate/" element={<ActivateUserPage />} />
                 <Route path="*" element={<NotFoundPage />} />
                 {/* Rutas privadas */}
                 <Route element={<PrivateRoutes />}>
