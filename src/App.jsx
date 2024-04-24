@@ -11,6 +11,7 @@ import NotFoundPage from "./pages/NotFoundPage"
 // Importación de componentes
 import Header from "./components/Header"
 import Footer from "./components/Footer"
+import PrivateRoutes from "./components/PrivateRoutes"
 
 function App() {
     return (
@@ -23,17 +24,19 @@ function App() {
                     path="/properties/:id"
                     element={<PropertyDetailsPage />}
                 />
-                {/* Rutas privadas */}
-                <Route path="/profile/" element={<ViewUserProfilePage />} />
-                <Route
-                    path="/profile/reviews"
-                    element={<PendingReviewsPage />}
-                />
-                <Route
-                    path="/profile/requests"
-                    element={<PendingRequestsPage />}
-                />
                 <Route path="*" element={<NotFoundPage />} />
+                {/* Rutas privadas */}
+                <Route element={<PrivateRoutes />}>
+                    <Route path="/profile/" element={<ViewUserProfilePage />} />
+                    <Route
+                        path="/profile/reviews"
+                        element={<PendingReviewsPage />}
+                    />
+                    <Route
+                        path="/profile/requests"
+                        element={<PendingRequestsPage />}
+                    />
+                </Route>
             </Routes>
             <Footer />
         </>
