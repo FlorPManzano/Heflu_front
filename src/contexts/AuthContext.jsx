@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { TOKEN_LOCAL_STORAGE_KEY } from "../utils/constants"
 // Importación de los servicios
 import {
@@ -17,6 +18,7 @@ export const AuthProvider = ({ children }) => {
     )
     const [authUser, setAuthUser] = useState(null)
     const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
     useEffect(() => {
         // Función que obtiene los datos del usuario.
@@ -91,6 +93,7 @@ export const AuthProvider = ({ children }) => {
         // Eliminamos el token del State y el usuario.
         setAuthToken(null)
         setAuthUser(null)
+        navigate("/")
     }
 
     return (
