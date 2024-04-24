@@ -5,6 +5,8 @@ import { useBookings } from "../hooks/useBookings"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
+import ReviewCard from "../components/ReviewCard"
+
 import { PiBathtub } from "react-icons/pi"
 import { BiArea } from "react-icons/bi"
 import { IoBedOutline } from "react-icons/io5"
@@ -56,7 +58,7 @@ export default function PropertyDetailsPage() {
     }
 
     return (
-        <section className=" flex flex-col mt-32 mb-10 mx-6 text-primary">
+        <section className="flex flex-col items-center mt-32 mb-10 mx-6 text-primary">
             <ul className="flex  items-center gap-4 justify-around flex-wrap mb-6">
                 {property_images &&
                     property_images.map((image, index) => (
@@ -72,63 +74,58 @@ export default function PropertyDetailsPage() {
                         </li>
                     ))}
             </ul>
-            <section className=" flex max-w-screen-xl   items-start  mb-4 ">
-                <ul className="flex flex-col gap-4">
-                    <li>
-                        <h1 className=" font-bold text-3xl">{title}</h1>
+            <section className="flex lg:w-10/12 justify-between gap-6 items-start  mb-4 ">
+                <div className="flex grow flex-col gap-4">
+                    <h1 className="font-bold text-3xl">{title}</h1>
+                    <h2 className="italic text-2xl ">{`${location}, ${country}`}</h2>
+                    <ul className=" font-semibold flex gap-4">
+                        <li>
+                            <ul className="flex items-center gap-2 mb-2">
+                                <li className="text-black">
+                                    <IoBedOutline />
+                                </li>
+                                <li>{bedrooms}</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul className="flex items-center gap-2">
+                                <li className="text-black">
+                                    <PiBathtub />
+                                </li>
+                                <li>{bathrooms}</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <ul className="flex items-center gap-2 mb-2">
+                                <li className="text-black">
+                                    <BiArea />
+                                </li>
+                                <li>{`${area} m²`}</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p className=" leading-relaxed text-justify">
+                        {description}
+                    </p>
+                </div>
+                <ul className="text-xs flex justify-end items-center gap-1 mb-2">
+                    <li className=" text-nowrap max-w-28 h-8 rounded-2xl p-2 text-white bg-emerald-500">
+                        {type}
                     </li>
-                    <li>
-                        <h2 className="font-semibold text-2xl ">{`${location}, ${country}`}</h2>
-                    </li>
-                    <li>
-                        <ul className="flex gap-4">
-                            <li>
-                                <ul className="flex items-center gap-2 mb-2">
-                                    <li className="text-black">
-                                        <IoBedOutline />
-                                    </li>
-                                    <li>{bedrooms}</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul className="flex items-center gap-2">
-                                    <li className="text-black">
-                                        <PiBathtub />
-                                    </li>
-                                    <li>{bathrooms}</li>
-                                </ul>
-                            </li>
-                            <li>
-                                <ul className="flex items-center gap-2 mb-2">
-                                    <li className="text-black">
-                                        <BiArea />
-                                    </li>
-                                    <li>{`${area} metros cuadrados`}</li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <section>
-                            <p>{description}</p>
-                        </section>
-                    </li>
-                </ul>
-                {/*Etiquetas*/}
-                <ul className="flex items-center gap-2">
-                    <li className="flex items-center text-center h-8 rounded-2xl  text-white bg-emerald-500">
-                        <span className="p-2">{type}</span>
-                    </li>
-                    <li className=" flex items-center text-center h-8 rounded-2xl p-2 text-white bg-violet-700">
-                        <span className="p-2">{country}</span>
+                    <li className=" text-nowrap max-w-28 h-8 rounded-2xl p-2 text-white bg-violet-700">
+                        {country}
                     </li>
                 </ul>
-                <section className="flex flex-col max-w-52">
-                    <h2>
-                        <span className="font-semibold ">{price} € </span>
+                <section className="flex flex-col justify-self-end justify-end p-4 border rounded-xl">
+                    <h2 className="mb-2">
+                        <b className=" text-xl font-bold pr-2 ">{price} € </b>
                         por noche
                     </h2>
-                    <form action="" onSubmit={handleSubmit}>
+                    <form
+                        className="flex flex-col justify-end gap-2 border-t"
+                        action=""
+                        onSubmit={handleSubmit}
+                    >
                         <DatePicker
                             selected={startDate}
                             onChange={onChange}
@@ -147,28 +144,45 @@ export default function PropertyDetailsPage() {
                     </form>
                 </section>
             </section>
-
-            <h2>Anfitrion</h2>
-            <div>
-                <h4>{property.name}</h4>
-                <img
-                    src={`${APIUrl}/${property.avatar}`}
-                    alt=""
-                    style={{
-                        width: "100px",
-                    }}
-                />
-
-                <h3>Reviews</h3>
-                {property.reviews &&
-                    property.reviews.map((review) => (
-                        <div key={review.id}>
-                            <h5>{review.name}</h5>
-                            <p>{review.comment}</p>
-                            <p>{review.rating} ⭐</p>
-                        </div>
-                    ))}
-            </div>
+            <section className="flex flex-col md:w-10/12 ">
+                <header className=" flex mb-2 flex-col gap-2">
+                    <h2 className=" font-semibold text-3xl my-4 text-violet-700">
+                        Anfitrión
+                    </h2>
+                    <figure className="flex items-start gap-4">
+                        <img
+                            className=" w-20 rounded-full"
+                            src={`${APIUrl}/${property.avatar}`}
+                            alt=""
+                        />
+                        <ul>
+                            <li>
+                                <h4 className=" font-semibold text-2xl">
+                                    {property.name}
+                                </h4>
+                            </li>
+                            <li>
+                                <ul className="flex items-center gap-2 mb-2">
+                                    <li className="text-primary">
+                                        <FaStar />
+                                    </li>
+                                    <li className="font-semibold pt-1">
+                                        {media_rating}
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </figure>
+                </header>
+                <ul className=" flex gap-5 mt-2 p-4 border-t  border-gray-500 ">
+                    {property.reviews &&
+                        property.reviews.map((review) => (
+                            <li key={review.id}>
+                                <ReviewCard review={review}></ReviewCard>
+                            </li>
+                        ))}
+                </ul>
+            </section>
         </section>
     )
 }
