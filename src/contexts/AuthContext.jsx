@@ -7,6 +7,7 @@ import {
     loginUserService,
     getUserProfileService,
 } from "../services/userServices"
+import { toast, Bounce } from "react-toastify"
 
 // Creamos un contexto.
 export const AuthContext = createContext(null)
@@ -51,9 +52,30 @@ export const AuthProvider = ({ children }) => {
             setLoading(true)
 
             const body = await registerUserService(registerForm)
-
-            if (body.status === "error") {
-                console.log(body.message)
+            if (body.status !== "ok") {
+                toast.error(await body?.message, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                })
+            } else {
+                toast("¡Te has registrado correctamente!", {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                })
             }
         } catch (err) {
             console.log(err.message)
@@ -69,8 +91,18 @@ export const AuthProvider = ({ children }) => {
 
             const body = await loginUserService(email, password)
 
-            if (body.status === "error") {
-                console.log(body.message)
+            if (body.status !== "ok") {
+                toast.error(await body?.message, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                })
             }
 
             // Almacenamos el token en el localStorage.
