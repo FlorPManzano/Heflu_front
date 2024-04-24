@@ -2,7 +2,11 @@ import { useEffect, useState } from "react"
 import useAuth from "../hooks/useAuth"
 import { useProperties } from "../hooks/useProperties"
 import { getUserReviewsProfileService } from "../services/userServices"
+
+import ReviewCard from "../components/ReviewCard"
+import PropertyCard from "../components/PropertyCard"
 import { FaStar } from "react-icons/fa"
+
 const APIUrl = import.meta.env.VITE_API_URL
 
 export default function ViewUserProfilePage() {
@@ -29,47 +33,6 @@ export default function ViewUserProfilePage() {
         }
         fetchReviews()
     }, [authUser])
-
-    // Función para formatear fecha
-    const formatDate = (dateString) => {
-        const date = new Date(dateString)
-
-        const months = [
-            "Enero",
-            "Febrero",
-            "Marzo",
-            "Abril",
-            "Mayo",
-            "Junio",
-            "Julio",
-            "Agosto",
-            "Septiembre",
-            "Octubre",
-            "Noviembre",
-            "Diciembre",
-        ]
-
-        // Obtener día, mes y año
-        const day = date.getDate()
-        const month = months[date.getMonth()]
-        const year = date.getFullYear()
-
-        // Obtener hora y minutos
-        let hour = date.getHours()
-        const minutes = date.getMinutes()
-
-        // Formatear hora a AM/PM
-        const ampm = hour >= 12 ? "PM" : "AM"
-        hour = hour % 12 || 12
-
-        // Formatear minutos con dos dígitos
-        const formatMins = minutes < 10 ? "0" + minutes : minutes
-
-        // Formatear la fecha completa
-        const formattedDate = `${day} ${month} ${year}, ${hour}:${formatMins} ${ampm}`
-
-        return formattedDate
-    }
 
     // Función para sacar la media de las valoraciones
     const getMediaRating = (type) => {
@@ -100,20 +63,20 @@ export default function ViewUserProfilePage() {
     }
 
     return (
-        <section className="mt-32 mb-10 mx-6 text-primary">
-            <h2 className="text-xl text-violet-700 font-bold border-b border-primary/80 pb-2 mb-4 tracking-wide">
-                Ver perfil
+        <section className="mt-32 mb-10 mx-48 text-primary">
+            <h2 className="text-3xl text-violet-700 font-bold border-b border-primary/40 pb-2 mb-4 tracking-wide">
+                Perfil
             </h2>
             {authUser && (
                 <>
-                    <div className="flex items-center justify-start gap-x-2 mb-4">
+                    <div className="flex items-center justify-start gap-x-2 my-6">
                         <img
-                            className="rounded-full w-16"
+                            className="rounded-full w-24"
                             src={`${APIUrl}/${authUser.avatar}`}
                             alt=""
                         />
                         <div>
-                            <h4 className="font-semibold text-lg">
+                            <h4 className="font-semibold text-xl">
                                 {authUser.name}
                             </h4>
                             <p className="flex gap-x-2 font-medium text-sm">
@@ -125,13 +88,13 @@ export default function ViewUserProfilePage() {
                             </p>
                         </div>
                     </div>
-                    <p className="text-sm leading-relaxed mb-4">
+                    <p className="text-md leading-relaxed mb-10">
                         {authUser.bio}
                     </p>
-                    <h3 className="font-semibold text-lg capitalize mb-4">
+                    <h3 className="font-semibold text-3xl text-primary mb-8">
                         Alquileres Publicados
                     </h3>
-                    <ul className="grid grid-cols-4 mb-4">
+                    <ul className="flex justify-start flex-wrap gap-6  mb-12">
                         {properties &&
                             properties
                                 .filter(
@@ -139,51 +102,26 @@ export default function ViewUserProfilePage() {
                                         property.owner_id === authUser.id
                                 )
                                 .map((property) => {
-                                    return (
-                                        <li key={property.id}>
-                                            <h2>{property.country}</h2>
-                                            <h2>{property.id}</h2>
-                                            <h4>
-                                                {property.bedrooms} habitaciones
-                                            </h4>
-                                            <h5>{property.price} €</h5>
-                                            <ul>
-                                                {property &&
-                                                    property.property_images.map(
-                                                        (image) => {
-                                                            return (
-                                                                <li key={image}>
-                                                                    <img
-                                                                        style={{
-                                                                            width: "100px",
-                                                                        }}
-                                                                        src={`${APIUrl}/${image}`}
-                                                                        alt=""
-                                                                    />
-                                                                </li>
-                                                            )
-                                                        }
-                                                    )}
-                                            </ul>
-                                        </li>
-                                    )
+                                    return <PropertyCard property={property} />
                                 })}
                     </ul>
                 </>
             )}
 
-            <div className="flex justify-start items-start gap-6">
-                <div className="w-1/2">
+            <div className="flex justify-between flex-wrap items-start gap-10 ">
+                <div className=" ">
                     <div className="flex items-center gap-4 mb-4">
-                        <h3 className="font-semibold text-lg capitalize ">
+                        <h3 className="font-semibold text-2xl capitalize ">
                             Valoraciones como casero
                         </h3>
-                        <p className="flex items-center justify-center gap-1">
-                            <span>
+                        <ul className=" flex items-center gap-2 ">
+                            <li className="text-primary">
                                 <FaStar />
-                            </span>
-                            {getMediaRating("as_owner")}
-                        </p>
+                            </li>
+                            <li className="pt-1">
+                                {getMediaRating("as_owner")}
+                            </li>
+                        </ul>
                     </div>
                     <div className="flex flex-col gap-4">
                         {reviews &&
@@ -192,56 +130,23 @@ export default function ViewUserProfilePage() {
                                     (review) => review.rev_type === "as_owner"
                                 )
                                 .map((review) => {
-                                    return (
-                                        <div key={review.id}>
-                                            <header>
-                                                <div>
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex items-center gap-x-2">
-                                                            <img
-                                                                className="rounded-full w-12"
-                                                                src={`${APIUrl}/${review.avatar}`}
-                                                                alt=""
-                                                            />
-                                                            <div>
-                                                                <p className="text-sm font-medium">
-                                                                    {
-                                                                        review.name
-                                                                    }
-                                                                </p>
-                                                                <p className="text-xs font-normal">
-                                                                    {formatDate(
-                                                                        review.created_at
-                                                                    )}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex flex-row items-center justify-center gap-x-1">
-                                                            <FaStar className="text-sm" />
-                                                            <p className="text-sm">
-                                                                {review.rating}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </header>
-                                            <p>{review.comment}</p>
-                                        </div>
-                                    )
+                                    return <ReviewCard review={review} />
                                 })}
                     </div>
                 </div>
-                <div className="w-1/2">
+                <div className="grow max-w-screen-md">
                     <div className="flex items-center gap-4 mb-4">
-                        <h3 className="font-semibold text-lg capitalize ">
+                        <h3 className="font-semibold text-2xl capitalize ">
                             Valoraciones como inquilino
                         </h3>
-                        <p className="flex items-center justify-center gap-1">
-                            <span>
+                        <ul className=" flex items-center gap-2 ">
+                            <li className="text-primary">
                                 <FaStar />
-                            </span>
-                            {getMediaRating("as_tenant")}
-                        </p>
+                            </li>
+                            <li className="pt-1">
+                                {getMediaRating("as_tenant")}
+                            </li>
+                        </ul>
                     </div>
 
                     <div className="flex flex-col gap-4">
@@ -251,42 +156,7 @@ export default function ViewUserProfilePage() {
                                     (review) => review.rev_type === "as_tenant"
                                 )
                                 .map((review) => {
-                                    return (
-                                        <div key={review.id}>
-                                            <header>
-                                                <div>
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex items-center gap-x-2">
-                                                            <img
-                                                                className="rounded-full w-12"
-                                                                src={`${APIUrl}/${review.avatar}`}
-                                                                alt=""
-                                                            />
-                                                            <div>
-                                                                <p className="text-sm font-medium">
-                                                                    {
-                                                                        review.name
-                                                                    }
-                                                                </p>
-                                                                <p className="text-xs font-normal">
-                                                                    {formatDate(
-                                                                        review.created_at
-                                                                    )}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="flex flex-row items-center justify-center gap-x-1">
-                                                            <FaStar className="text-sm" />
-                                                            <p className="text-sm">
-                                                                {review.rating}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </header>
-                                            <p>{review.comment}</p>
-                                        </div>
-                                    )
+                                    return <ReviewCard review={review} />
                                 })}
                     </div>
                 </div>
