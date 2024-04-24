@@ -13,14 +13,14 @@ const getReviewsService = async (token) => {
 }
 
 // Crear una reseña
-const addReviewService = async (token, booking_id, rating, comment) => {
-    const res = await fetch(`${APIUrl}/reviews`, {
+const addReviewService = async (token, id, rating, comment) => {
+    const res = await fetch(`${APIUrl}/reviews/${id}`, {
         method: "POST",
         headers: {
             Authorization: token,
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ bookingId: booking_id, rating, comment }),
+        body: JSON.stringify({ rating, comment }),
     })
     const body = await res.json()
 
