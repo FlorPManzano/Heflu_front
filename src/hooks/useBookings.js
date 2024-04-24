@@ -11,6 +11,7 @@ export const useBookings = () => {
     const [bookings, setBookings] = useState({})
     const [loading, setLoading] = useState(false)
     const { authUser, authToken } = useAuth()
+    const [flag, setFlag] = useState(false)
 
     useEffect(() => {
         const getBookings = async () => {
@@ -27,7 +28,7 @@ export const useBookings = () => {
             }
         }
         getBookings()
-    }, [authToken, authUser, bookings])
+    }, [authToken, authUser, flag])
 
     // Función para crear reservas
     const addBooking = async (propertyId, startDate, endDate) => {
@@ -39,6 +40,7 @@ export const useBookings = () => {
                 startDate,
                 endDate
             )
+            setFlag(!flag)
         } catch (err) {
             console.log(err.message)
         } finally {
@@ -51,6 +53,7 @@ export const useBookings = () => {
         setLoading(true)
         try {
             const body = await confirmBookingService(authToken, bookingId)
+            setFlag(!flag)
         } catch (err) {
             console.log(err.message)
         } finally {
@@ -62,6 +65,7 @@ export const useBookings = () => {
         setLoading(true)
         try {
             const body = await cancelBookingService(authToken, bookingId)
+            setFlag(!flag)
         } catch (err) {
             console.log(err.message)
         } finally {
