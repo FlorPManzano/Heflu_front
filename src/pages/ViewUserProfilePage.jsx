@@ -4,14 +4,14 @@ import { useProperties } from "../hooks/useProperties"
 import { getUserReviewsProfileService } from "../services/userServices"
 
 import ReviewCard from "../components/ReviewCard"
-import PropertyCard from "../components/PropertyCard"
+import ListPropertiesCards from "../components/ListPropertiesCards"
 import { FaStar } from "react-icons/fa"
 
 const APIUrl = import.meta.env.VITE_API_URL
 
 export default function ViewUserProfilePage() {
     const { authUser, authToken } = useAuth()
-    const { properties } = useProperties()
+    const { properties, userProperties } = useProperties()
     const [reviews, setReviews] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -33,6 +33,10 @@ export default function ViewUserProfilePage() {
         }
         fetchReviews()
     }, [authUser])
+
+    const propertiesUser = properties.filter(
+        (property) => property.owner_id === authUser.id
+    )
 
     // Función para sacar la media de las valoraciones
     const getMediaRating = (type) => {
@@ -94,17 +98,7 @@ export default function ViewUserProfilePage() {
                     <h3 className="font-semibold text-3xl text-primary mb-8">
                         Alquileres Publicados
                     </h3>
-                    <ul className="flex justify-start flex-wrap gap-6  mb-12">
-                        {properties &&
-                            properties
-                                .filter(
-                                    (property) =>
-                                        property.owner_id === authUser.id
-                                )
-                                .map((property) => {
-                                    return <PropertyCard property={property} />
-                                })}
-                    </ul>
+                    {<ListPropertiesCards properties={userProperties} />}
                 </>
             )}
 
