@@ -7,8 +7,9 @@ import useAuth from "./useAuth"
 
 export const useProperties = () => {
     const [properties, setProperties] = useState([])
+    const [userProperties, setUserProperties] = useState([])
     const [loading, setLoading] = useState(false)
-    const { authToken } = useAuth()
+    const { authToken, authUser } = useAuth()
 
     useEffect(() => {
         const fetchProperties = async () => {
@@ -23,6 +24,7 @@ export const useProperties = () => {
             }
         }
         fetchProperties()
+        if (authToken) fetchUserProperties()
     }, [])
 
     // Función para añadir propiedades
@@ -37,9 +39,28 @@ export const useProperties = () => {
         }
     }
 
+    // Función para filtrar propiedades por usuario
+
+    const fetchUserProperties = async () => {
+        try {
+            setLoading(true)
+            const body = await getAllPropertiesService()
+            const filteredProperties = body.data.filter((property) => {
+                return property.owner_id === authUser.id
+            })
+            setUserProperties(filteredProperties)
+        } catch (err) {
+            console.log(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     return {
         properties,
         loading,
         addProperty,
+        userProperties,
+        fetchUserProperties,
     }
 }
