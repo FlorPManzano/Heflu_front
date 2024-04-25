@@ -107,7 +107,7 @@ export default function HomePage() {
         <>
             <Hero />
 
-            <section>
+            <section className="mx-10">
                 {/* Filtros */}
                 <label htmlFor="">
                     Selecciona un destino:
