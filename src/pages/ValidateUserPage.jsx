@@ -1,9 +1,16 @@
-import { useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import useAuth from "../hooks/useAuth"
 
-const ActivateUserPage = ({}) => {
+const ValidateUserPage = ({}) => {
     const navigate = useNavigate()
+    const { registration_code } = useParams()
+    const { authValidate } = useAuth()
+    useEffect(() => {
+        authValidate(registration_code)
+    }, [registration_code])
     return (
-        <section className="mx-10 h-[70vh] mt-32 mx-36 py-4 flex items-center justify-center text-right lg:flex-row lg:items-center lg:text-end lg:justify-between lg:gap-x-10">
+        <section className="h-[70vh] mt-32 mx-36 py-4 flex items-center justify-center text-right lg:flex-row lg:items-center lg:text-end lg:justify-between lg:gap-x-10">
             <div className="flex flex-col lg:items-end lg:justify-center gap-3">
                 <h2 className="text-2xl lg:text-2xl xl:text-6xl  mb-3 leading-normal">
                     ¡Felicidades por registrarte en
@@ -26,4 +33,4 @@ const ActivateUserPage = ({}) => {
         </section>
     )
 }
-export default ActivateUserPage
+export default ValidateUserPage
