@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
 import ReviewCard from "../components/ReviewCard"
+import BentoGrid from "../components/BentoGrid"
 
 import { PiBathtub } from "react-icons/pi"
 import { BiArea } from "react-icons/bi"
@@ -59,20 +60,10 @@ export default function PropertyDetailsPage() {
 
     return (
         <section className="flex flex-col items-center mt-32 mb-10 mx-6 text-primary">
-            <ul className="flex  items-center gap-4 justify-around flex-wrap mb-6">
-                {property_images &&
-                    property_images.map((image, index) => (
-                        <li
-                            key={image}
-                            className={`${index == 0 ? "flex-grow " : ""}w-max h-80`}
-                        >
-                            <img
-                                src={`${APIUrl}/${image}`}
-                                alt=""
-                                className=" h-80 object-contain"
-                            />
-                        </li>
-                    ))}
+            <ul className="flex items-center justify-center mb-10">
+                {property_images && property_images.length > 0 && (
+                    <BentoGrid images={property_images} />
+                )}
             </ul>
             <section className="flex lg:w-10/12 justify-between gap-6 items-start  mb-4 ">
                 <div className="flex grow flex-col gap-4">
