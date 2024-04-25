@@ -4,6 +4,7 @@ const APIUrl = import.meta.env.VITE_API_URL
 
 export default function PendingRequestsPage() {
     const { bookings, acceptBooking, cancelBooking } = useBookings()
+    console.log(bookings)
 
     function formatDate(dateString) {
         const weekDays = [
@@ -66,11 +67,16 @@ export default function PendingRequestsPage() {
                     bookings.map((booking) => (
                         <li key={booking.id}>
                             <article className="flex gap-6 p-4 border border-primary/20 rounded-2xl shadow-md max-w-[760px]">
-                                <img
-                                    src={`${APIUrl}/${booking.images[0]}`}
-                                    alt="Property"
-                                    className="w-44 h-44 object-cover rounded-2xl"
-                                />
+                                {booking.images && booking.images.length > 0 ? (
+                                    <img
+                                        src={`${APIUrl}/${booking.images[0]}`}
+                                        alt="Property"
+                                        className="w-44 h-44 object-cover rounded-2xl"
+                                    />
+                                ) : (
+                                    <div className="w-44 h-44 rounded-2xl bg-gray-200"></div>
+                                )}
+
                                 <div>
                                     <h4 className="font-semibold capitalize text-lg pb-2">
                                         Solicitud de reserva para "
