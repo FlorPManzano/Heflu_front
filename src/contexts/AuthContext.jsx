@@ -6,6 +6,7 @@ import {
     registerUserService,
     loginUserService,
     getUserProfileService,
+    validateUserService,
 } from "../services/userServices"
 import { toast, Bounce } from "react-toastify"
 
@@ -127,7 +128,37 @@ export const AuthProvider = ({ children }) => {
         setAuthUser(null)
         navigate("/")
     }
+    const authValidate = async (registration_code) => {
+        try {
+            setLoading(true)
 
+            const body = await validateUserService(registration_code)
+
+            if (body.status !== "ok") {
+                toast.error(await body?.message, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                })
+            } else {
+                // Almacenamos el token en el localStorage.
+                localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, body.data.token)
+
+                // Almacenamos el token en el State.
+                setAuthToken(body.data.token)
+            }
+        } catch (err) {
+            console.log(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
     return (
         <AuthContext.Provider
             value={{
@@ -135,6 +166,7 @@ export const AuthProvider = ({ children }) => {
                 authRegister,
                 authLogin,
                 authLogout,
+                authValidate,
                 loading,
                 authToken,
                 setAuthToken,

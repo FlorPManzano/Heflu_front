@@ -12,9 +12,9 @@ const registerUserService = async (registerForm) => {
 }
 
 // Validar un usuario
-const validateUserService = async (params) => {
-    const res = await fetch(`${APIUrl}/users/validate/${params}`, {
-        method: "POST",
+const validateUserService = async (registration_code) => {
+    const res = await fetch(`${APIUrl}/users/validate/${registration_code}`, {
+        method: "PUT",
         headers: {
             "Content-Type": "application/json",
         },
