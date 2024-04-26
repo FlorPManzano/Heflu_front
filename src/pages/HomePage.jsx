@@ -107,67 +107,83 @@ export default function HomePage() {
         <>
             <Hero />
 
-            <section className="mx-10">
+            <section className="m-10">
                 {/* Filtros */}
-                <label htmlFor="">
-                    Selecciona un destino:
-                    <select
-                        value={country}
-                        onChange={handleSelectChangeCountry}
+                <section className="flex gap-x-8 items-center">
+                    <label
+                        htmlFor=""
+                        className="block mb-2 text-md font-medium text-violet-700"
                     >
-                        <option value="">Todos</option>
-                        {uniqueCountrys.map((country) => (
-                            <option key={country} value={country}>
-                                {country}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-                <label htmlFor="">
-                    Selecciona un precio máximo:
-                    <select
-                        value={maxPrice}
-                        onChange={handleSelectChangeMaxPrice}
+                        Selecciona un destino:
+                        <select
+                            value={country}
+                            onChange={handleSelectChangeCountry}
+                            className=" border border-gray-400 text-primary text-sm rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5"
+                        >
+                            <option value="">Todos</option>
+                            {uniqueCountrys.map((country) => (
+                                <option key={country} value={country}>
+                                    {country}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                    <label
+                        htmlFor=""
+                        className="block mb-2 text-md font-medium text-violet-700"
                     >
-                        <option value="">Todos</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                        <option value="150">150</option>
-                        <option value="999999">+200</option>
-                    </select>
-                </label>
-                <label htmlFor="">
-                    Selecciona habitaciones mínimas:
-                    <select
-                        value={minRooms}
-                        onChange={handleSelectChangeMinRooms}
+                        Selecciona un precio máximo:
+                        <select
+                            value={maxPrice}
+                            onChange={handleSelectChangeMaxPrice}
+                            className=" border border-gray-400 text-primary text-sm rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5"
+                        >
+                            <option value="">Todos</option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="150">150</option>
+                            <option value="999999">+200</option>
+                        </select>
+                    </label>
+                    <label
+                        htmlFor=""
+                        className="block mb-2 text-md font-medium text-violet-700"
                     >
-                        <option value="">Todas</option>
-                        <option value="1">1 o más</option>
-                        <option value="2">2 o más</option>
-                        <option value="3">3 o más</option>
-                        <option value="4">4 o más</option>
-                    </select>
-                </label>
-                <DatePicker
-                    selected={startDate}
-                    onChange={handleSelectChangeDates}
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={new Date()}
-                    selectsRange
-                    selectsDisabledDaysInRange
-                    placeholderText="Selecciona un rango de fechas"
-                    showIcon
-                    className="text-primary"
-                />
+                        Selecciona habitaciones mínimas:
+                        <select
+                            value={minRooms}
+                            onChange={handleSelectChangeMinRooms}
+                            className=" border border-gray-400 text-primary text-sm rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5"
+                        >
+                            <option value="">Todas</option>
+                            <option value="1">1 o más</option>
+                            <option value="2">2 o más</option>
+                            <option value="3">3 o más</option>
+                            <option value="4">4 o más</option>
+                        </select>
+                    </label>
 
-                <button
-                    className="bg-violet-700 border border-violet-700 text-white px-2 py-1 text-sm lg:px-4 lg:py-2 lg:text-md rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out"
-                    onClick={handleClearFilters}
-                >
-                    Limpiar filtros
-                </button>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={handleSelectChangeDates}
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={new Date()}
+                        selectsRange
+                        selectsDisabledDaysInRange
+                        placeholderText="Selecciona un rango de fechas"
+                        showIcon
+                        className="text-primary"
+                    />
+
+                    <button
+                        className="bg-violet-700 border border-violet-700 text-white px-2 py-1 text-sm lg:px-4 lg:py-2 lg:text-md rounded-lg hover:shadow-lg transition-shadow duration-300 ease-in-out"
+                        onClick={handleClearFilters}
+                    >
+                        Limpiar filtros
+                    </button>
+                </section>
+
                 <section className=" flex-col justify-center items-center min-h-40 mt-5">
                     {filterProperties?.length > 0 ? (
                         <ListPropertiesCards
