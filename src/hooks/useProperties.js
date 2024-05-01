@@ -32,6 +32,7 @@ export const useProperties = () => {
         setLoading(true)
         try {
             const body = await addPropertyService(authToken, formData)
+            return body
         } catch (err) {
             console.log(err.message)
         } finally {
