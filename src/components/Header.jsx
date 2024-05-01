@@ -22,7 +22,7 @@ const modalStyles = {
     },
 }
 
-const Header = () => {
+const Header = ({ filterProperties, setFilterProperties }) => {
     const { authToken, authUser, authLogout } = useAuth()
     const [navIsActive, setNavIsActive] = useState(false)
     const [registerModal, setRegisterModal] = useState(false)
@@ -212,6 +212,8 @@ const Header = () => {
                     </div>
                     <NewPropertyModal
                         newPropertyModal={newPropertyModal}
+                        setFilterProperties={setFilterProperties}
+                        filterProperties={filterProperties}
                         setNewPropertyModal={setNewPropertyModal}
                         closeNewPropertyModal={closeNewPropertyModal}
                     />
