@@ -13,13 +13,24 @@ import Header from "./components/Header"
 import Footer from "./components/Footer"
 import PrivateRoutes from "./components/PrivateRoutes"
 
+import { useFilterProperties } from "./hooks/useFilterProperties"
+
 function App() {
+    const { filterProperties, setFilterProperties } = useFilterProperties()
     return (
         <>
-            <Header />
+            {filterProperties.length > 0 && (
+                <Header
+                    setFilterProperties={setFilterProperties}
+                    filterProperties={filterProperties}
+                />
+            )}
             <Routes>
                 {/* Rutas públicas */}
-                <Route path="/" element={<HomePage />} />
+                <Route
+                    path="/"
+                    element={<HomePage filterProperties={filterProperties} />}
+                />
                 <Route
                     path="/properties/:id"
                     element={<PropertyDetailsPage />}
