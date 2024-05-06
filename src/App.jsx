@@ -19,12 +19,10 @@ function App() {
     const { filterProperties, setFilterProperties } = useFilterProperties()
     return (
         <>
-            {filterProperties.length > 0 && (
-                <Header
-                    setFilterProperties={setFilterProperties}
-                    filterProperties={filterProperties}
-                />
-            )}
+            <Header
+                setFilterProperties={setFilterProperties}
+                filterProperties={filterProperties}
+            />
             <Routes>
                 {/* Rutas públicas */}
                 <Route
