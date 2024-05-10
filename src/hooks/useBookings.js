@@ -48,7 +48,6 @@ export const useBookings = () => {
                 endDate
             )
 
-            console.log("body", body)
             if (body.status === 400) {
                 toast.error("Esas fechas están ocupadas", {
                     position: "top-center",
@@ -65,7 +64,7 @@ export const useBookings = () => {
             }
 
             if (body.status !== "ok") {
-                toast.error("No has cubierto las fechas", {
+                toast.error(body.message, {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -80,7 +79,7 @@ export const useBookings = () => {
             }
 
             if (body.status === "ok") {
-                toast("Reserva creada con éxito.", {
+                toast(body.message, {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
