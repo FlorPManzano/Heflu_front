@@ -8,4 +8,7 @@
     body {
         font-family: "Poppins";
     }
+    #root {
+        min-height: 100vh;
+    }
 }

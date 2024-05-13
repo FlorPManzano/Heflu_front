@@ -18,41 +18,48 @@ import { useFilterProperties } from "./hooks/useFilterProperties"
 function App() {
     const { filterProperties, setFilterProperties } = useFilterProperties()
     return (
-        <>
+        <div className="flex flex-col">
             <Header
                 setFilterProperties={setFilterProperties}
                 filterProperties={filterProperties}
             />
-            <Routes>
-                {/* Rutas públicas */}
-                <Route
-                    path="/"
-                    element={<HomePage filterProperties={filterProperties} />}
-                />
-                <Route
-                    path="/properties/:id"
-                    element={<PropertyDetailsPage />}
-                />
-                <Route
-                    path="/users/validate/:registration_code"
-                    element={<ValidateUserPage />}
-                />
-                <Route path="*" element={<NotFoundPage />} />
-                {/* Rutas privadas */}
-                <Route element={<PrivateRoutes />}>
-                    <Route path="/profile/" element={<ViewUserProfilePage />} />
+            <div className="min-h-screen flex-grow">
+                <Routes>
+                    {/* Rutas públicas */}
                     <Route
-                        path="/profile/reviews"
-                        element={<PendingReviewsPage />}
+                        path="/"
+                        element={
+                            <HomePage filterProperties={filterProperties} />
+                        }
                     />
                     <Route
-                        path="/profile/requests"
-                        element={<PendingRequestsPage />}
+                        path="/properties/:id"
+                        element={<PropertyDetailsPage />}
                     />
-                </Route>
-            </Routes>
+                    <Route
+                        path="/users/validate/:registration_code"
+                        element={<ValidateUserPage />}
+                    />
+                    <Route path="*" element={<NotFoundPage />} />
+                    {/* Rutas privadas */}
+                    <Route element={<PrivateRoutes />}>
+                        <Route
+                            path="/profile/"
+                            element={<ViewUserProfilePage />}
+                        />
+                        <Route
+                            path="/profile/reviews"
+                            element={<PendingReviewsPage />}
+                        />
+                        <Route
+                            path="/profile/requests"
+                            element={<PendingRequestsPage />}
+                        />
+                    </Route>
+                </Routes>
+            </div>
             <Footer />
-        </>
+        </div>
     )
 }
 
