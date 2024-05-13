@@ -9,9 +9,8 @@ import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import ListPropertiesCards from "../components/ListPropertiesCards.jsx"
 
-export default function HomePage() {
+export default function HomePage({ filterProperties }) {
     const { properties } = useProperties()
-    const { filterProperties } = useFilterProperties()
     const [country, setCountry] = useState("")
     const [minRooms, setMinRooms] = useState("")
     const [maxPrice, setMaxPrice] = useState("")

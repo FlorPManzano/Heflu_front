@@ -1,9 +1,12 @@
 import { useState, useRef } from "react"
-import useAuth from "../../hooks/useAuth"
 import { useProperties } from "../../hooks/useProperties"
 import Logo from "/heflu-logo.svg"
 
-const NewPropertyModal = ({ setNewPropertyModal }) => {
+const NewPropertyModal = ({
+    setNewPropertyModal,
+    filterProperties,
+    setFilterProperties,
+}) => {
     // const { authToken } = useAuth()
     const { addProperty } = useProperties()
 
@@ -41,7 +44,10 @@ const NewPropertyModal = ({ setNewPropertyModal }) => {
         }
 
         try {
-            await addProperty(formData)
+            const { data } = await addProperty(formData)
+            const newProperty = await data
+
+            setFilterProperties([...filterProperties, newProperty])
             setNewPropertyModal(false)
         } catch (error) {
             console.log(error.message)
