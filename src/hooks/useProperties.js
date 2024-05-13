@@ -24,8 +24,8 @@ export const useProperties = () => {
             }
         }
         fetchProperties()
-        if (authToken) fetchUserProperties()
-    }, [])
+        if (authUser) fetchUserProperties()
+    }, [authUser])
 
     // Función para añadir propiedades
     const addProperty = async (formData) => {

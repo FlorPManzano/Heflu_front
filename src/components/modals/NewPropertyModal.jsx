@@ -47,7 +47,9 @@ const NewPropertyModal = ({
             const { data } = await addProperty(formData)
             const newProperty = await data
 
-            setFilterProperties([...filterProperties, newProperty])
+            if (filterProperties == true) {
+                setFilterProperties([...filterProperties, newProperty])
+            } else setFilterProperties([newProperty])
             setNewPropertyModal(false)
         } catch (error) {
             console.log(error.message)
