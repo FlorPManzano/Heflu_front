@@ -49,7 +49,7 @@ export const useBookings = () => {
             )
 
             if (body.status === 400) {
-                toast.error("Esas fechas están ocupadas", {
+                toast.error(body.message, {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
