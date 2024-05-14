@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useReviews } from "../hooks/useReviews"
 import useAuth from "../hooks/useAuth"
 import Rating from "@mui/material/Rating"
+import { toast, Bounce } from "react-toastify"
 
 const APIUrl = import.meta.env.VITE_API_URL
 export default function PendingReviewsPage() {
@@ -21,9 +22,28 @@ export default function PendingReviewsPage() {
     const handleSubmit = async (e, key) => {
         e.preventDefault()
         try {
-            await addReview(key, rating[key], comment[key])
-            setComment({ ...comment, [key]: "" })
-            setRating({ ...rating, [key]: 0 })
+            const { status, message } = await addReview(
+                key,
+                rating[key],
+                comment[key]
+            )
+
+            if (status == "ok") {
+                setComment({ ...comment, [key]: "" })
+                setRating({ ...rating, [key]: 0 })
+            }
+
+            toast(message, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            })
         } catch (error) {
             console.log(error.message)
         }

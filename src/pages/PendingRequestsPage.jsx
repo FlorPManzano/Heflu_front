@@ -4,7 +4,6 @@ const APIUrl = import.meta.env.VITE_API_URL
 
 export default function PendingRequestsPage() {
     const { bookings, acceptBooking, cancelBooking } = useBookings()
-    console.log(bookings)
 
     function formatDate(dateString) {
         const weekDays = [

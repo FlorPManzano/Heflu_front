@@ -17,7 +17,9 @@ export const useReviews = () => {
                 setLoading(true)
                 if (!authUser || !authToken) return
                 const reviews = await getReviewsService(authToken)
-                if (!reviews) return console.log("No reviews found")
+
+                if (!reviews) return setReviews([])
+
                 setReviews(reviews.data)
             } catch (error) {
                 console.log(error.message)
@@ -39,6 +41,7 @@ export const useReviews = () => {
                 comment
             )
             setFlag(!flag)
+            return body
         } catch (err) {
             console.log(err.message)
         } finally {

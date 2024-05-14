@@ -7,6 +7,10 @@ const getReviewsService = async (token) => {
             Authorization: token,
         },
     })
+
+    if (res?.status !== 200) {
+        return
+    }
     const body = await res.json()
 
     return body
