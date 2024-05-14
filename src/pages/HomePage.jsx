@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
 import { useProperties } from "../hooks/useProperties.js"
 import { useFilterProperties } from "../hooks/useFilterProperties.js"
 
@@ -11,13 +11,17 @@ import ListPropertiesCards from "../components/ListPropertiesCards.jsx"
 
 export default function HomePage({ filterProperties }) {
     const { properties } = useProperties()
-    const [country, setCountry] = useState("")
-    const [minRooms, setMinRooms] = useState("")
-    const [maxPrice, setMaxPrice] = useState("")
-    const [startDate, setStartDate] = useState("")
-    const [endDate, setEndDate] = useState("")
     const navigate = useNavigate()
     const location = useLocation()
+    const searchParams = new URLSearchParams(location.search)
+
+    const [country, setCountry] = useState(searchParams.get("country") || "")
+    const [minRooms, setMinRooms] = useState(searchParams.get("minRooms") || "")
+    const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "")
+    const [startDate, setStartDate] = useState(
+        searchParams.get("startDate") || ""
+    )
+    const [endDate, setEndDate] = useState(searchParams.get("endDate") || "")
 
     // Sacar los distintos países
     const allCountrys = properties.map((property) => property.country)
@@ -40,7 +44,6 @@ export default function HomePage({ filterProperties }) {
         selectedStartDate,
         selectedEndDate
     ) => {
-        const searchParams = new URLSearchParams(location.search)
         selectedCountry !== ""
             ? searchParams.set("country", selectedCountry)
             : searchParams.delete("country")
