@@ -65,6 +65,7 @@ export const AuthProvider = ({ children }) => {
                     theme: "light",
                     transition: Bounce,
                 })
+                return false
             } else {
                 toast("¡Te has registrado correctamente!", {
                     position: "top-center",
@@ -77,6 +78,7 @@ export const AuthProvider = ({ children }) => {
                     theme: "light",
                     transition: Bounce,
                 })
+                return true
             }
         } catch (err) {
             console.log(err.message)

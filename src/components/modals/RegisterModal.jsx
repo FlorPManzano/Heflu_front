@@ -24,8 +24,8 @@ const RegisterModal = ({ setRegisterModal }) => {
         formData.set("avatar", image)
 
         try {
-            await authRegister(formData)
-            setRegisterModal(false)
+            const flag = await authRegister(formData)
+            if (flag == true) setRegisterModal(false)
         } catch (error) {
             console.log(error.message)
         }
