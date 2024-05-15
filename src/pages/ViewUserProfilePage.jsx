@@ -24,7 +24,10 @@ export default function ViewUserProfilePage() {
                     authToken,
                     authUser.id
                 )
-                setReviews(body.data)
+
+                if (body != undefined) {
+                    setReviews(body.data)
+                }
             } catch (err) {
                 console.log(err.message)
             } finally {
@@ -83,7 +86,8 @@ export default function ViewUserProfilePage() {
                                 Valoración Media:{" "}
                                 <span className="flex items-center gap-x-1">
                                     <FaStar className="text-md" />{" "}
-                                    {authUser.media_rating}
+                                    {authUser.media_rating ||
+                                        "Sin valoraciones!"}
                                 </span>
                             </p>
                         </div>

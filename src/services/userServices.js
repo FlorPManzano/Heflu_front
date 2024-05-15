@@ -7,8 +7,11 @@ const registerUserService = async (registerForm) => {
         body: registerForm,
     })
 
-    const body = await res.json()
-    return body
+    if (res.status === 200) {
+        const body = await res.json()
+
+        return body
+    }
 }
 
 // Validar un usuario
@@ -21,9 +24,11 @@ const validateUserService = async (registration_code) => {
         body: JSON.stringify(),
     })
 
-    const body = await res.json()
+    if (res.status === 200) {
+        const body = await res.json()
 
-    return body
+        return body
+    }
 }
 
 // Inicio de sesión
@@ -36,9 +41,11 @@ const loginUserService = async (email, password) => {
         body: JSON.stringify({ email, password }),
     })
 
-    const body = await res.json()
+    if (res.status === 200) {
+        const body = await res.json()
 
-    return body
+        return body
+    }
 }
 
 // Ver perfil privado de un usuario
@@ -49,9 +56,11 @@ const getUserProfileService = async (token, id) => {
         },
     })
 
-    const body = await res.json()
+    if (res.status === 200) {
+        const body = await res.json()
 
-    return body
+        return body
+    }
 }
 
 // Ver todas las valoraciones de un usuario
@@ -62,9 +71,11 @@ const getUserReviewsProfileService = async (token, id) => {
         },
     })
 
-    const body = await res.json()
+    if (res.status === 200) {
+        const body = await res.json()
 
-    return body
+        return body
+    }
 }
 
 export {
