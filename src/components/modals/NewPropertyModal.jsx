@@ -165,6 +165,7 @@ const NewPropertyModal = ({
                     className="bg-transparent text-primary outline outline-0 focus:outline-0 placeholder-primary transition-all placeholder-shown:border placeholder-shown:border-primary/50 border focus:border-1 text-sm px-3 py-2.5 rounded-[10px] border-primary/50 focus:border-violet-700"
                     id="images"
                     type="file"
+                    accept="image/png, image/jpeg"
                     multiple
                     required
                     ref={fileInputRef}

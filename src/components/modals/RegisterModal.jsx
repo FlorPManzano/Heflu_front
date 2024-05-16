@@ -86,6 +86,7 @@ const RegisterModal = ({ setRegisterModal }) => {
                     id="avatar"
                     type="file"
                     required
+                    accept="image/png, image/jpeg"
                     ref={fileInputRef}
                     onChange={(e) => setAvatar(e.target.value)}
                 />
