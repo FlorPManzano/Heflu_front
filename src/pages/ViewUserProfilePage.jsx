@@ -3,7 +3,6 @@ import useAuth from "../hooks/useAuth"
 import { useProperties } from "../hooks/useProperties"
 import { getUserReviewsProfileService } from "../services/userServices"
 
-import ReviewCard from "../components/ReviewCard"
 import ListPropertiesCards from "../components/ListPropertiesCards"
 import { FaStar } from "react-icons/fa"
 import ListReviewCards from "../components/ListReviewCards"
