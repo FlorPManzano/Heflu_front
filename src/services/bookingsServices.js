@@ -7,6 +7,7 @@ const getBookingsService = async (token) => {
             Authorization: token,
         },
     })
+    if (res.status !== 200) return
     const body = await res.json()
 
     return body
@@ -27,6 +28,7 @@ const addBookingService = async (
         },
         body: JSON.stringify({ id: property_id, starting_date, ending_date }),
     })
+    if (res.status !== 200) return
     const body = await res.json()
 
     return body
@@ -41,6 +43,7 @@ const confirmBookingService = async (token, id) => {
             "Content-Type": "application/json",
         },
     })
+    if (res.status !== 200) return
     const body = await res.json()
 
     return body
@@ -55,6 +58,7 @@ const cancelBookingService = async (token, id) => {
             "Content-Type": "application/json",
         },
     })
+    if (res.status !== 200) return
     const body = await res.json()
 
     return body
