@@ -21,11 +21,10 @@ export const useBookings = () => {
                 setLoading(true)
                 if (!authUser || !authToken) return
                 const bookings = await getBookingsService(authToken)
-                if (!bookings.data) {
-                    console.log("no hay data")
+
+                if (bookings == undefined) {
                     setBookings([])
                 } else {
-                    console.log("hay data")
                     setBookings(bookings.data)
                 }
             } catch (error) {
