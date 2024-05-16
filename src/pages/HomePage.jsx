@@ -1,7 +1,6 @@
 import { useState } from "react"
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useProperties } from "../hooks/useProperties.js"
-import { useFilterProperties } from "../hooks/useFilterProperties.js"
 
 // Importación de componentes
 import Hero from "../components/Hero"
@@ -100,11 +99,6 @@ export default function HomePage({ filterProperties }) {
         updateURL("", "", "", "", "")
     }
 
-    const handleCardClick = async (e, key) => {
-        e.preventDefault()
-        navigate(`/properties/${key}`)
-    }
-
     return (
         <>
             <Hero />
@@ -188,10 +182,7 @@ export default function HomePage({ filterProperties }) {
 
                 <section className=" flex-col justify-center items-center min-h-40 mt-5">
                     {filterProperties?.length > 0 ? (
-                        <ListPropertiesCards
-                            properties={filterProperties}
-                            handleCardClick={handleCardClick}
-                        />
+                        <ListPropertiesCards properties={filterProperties} />
                     ) : (
                         <p className="grow text-2xl text-center">
                             Uy, parece que no hay ninguna propiedad disponible

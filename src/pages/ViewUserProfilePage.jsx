@@ -3,9 +3,9 @@ import useAuth from "../hooks/useAuth"
 import { useProperties } from "../hooks/useProperties"
 import { getUserReviewsProfileService } from "../services/userServices"
 
-import ReviewCard from "../components/ReviewCard"
 import ListPropertiesCards from "../components/ListPropertiesCards"
 import { FaStar } from "react-icons/fa"
+import ListReviewCards from "../components/ListReviewCards"
 
 const APIUrl = import.meta.env.VITE_API_URL
 
@@ -64,6 +64,12 @@ export default function ViewUserProfilePage() {
             return media.toFixed(1)
         }
     }
+    const tenantReviews = reviews.filter(
+        (review) => review.rev_type === "as_tenant"
+    )
+    const ownerReviews = reviews.filter(
+        (review) => review.rev_type === "as_owner"
+    )
 
     return (
         <section className="mt-32 mb-10 mx-48 text-primary">
@@ -120,14 +126,9 @@ export default function ViewUserProfilePage() {
                         </ul>
                     </div>
                     <div className="flex flex-col gap-4">
-                        {reviews &&
-                            reviews
-                                .filter(
-                                    (review) => review.rev_type === "as_owner"
-                                )
-                                .map((review) => {
-                                    return <ReviewCard review={review} />
-                                })}
+                        {ownerReviews && (
+                            <ListReviewCards reviews={ownerReviews} />
+                        )}
                     </div>
                 </div>
                 <div className="grow max-w-screen-md">
@@ -146,14 +147,9 @@ export default function ViewUserProfilePage() {
                     </div>
 
                     <div className="flex flex-col gap-4">
-                        {reviews &&
-                            reviews
-                                .filter(
-                                    (review) => review.rev_type === "as_tenant"
-                                )
-                                .map((review) => {
-                                    return <ReviewCard review={review} />
-                                })}
+                        {tenantReviews && (
+                            <ListReviewCards reviews={tenantReviews} />
+                        )}
                     </div>
                 </div>
             </div>

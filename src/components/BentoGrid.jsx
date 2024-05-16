@@ -2,7 +2,7 @@ const APIUrl = import.meta.env.VITE_API_URL
 
 const BentoGrid = ({ images }) => {
     let gridComponent
-    console.log(images.length)
+
     switch (images.length) {
         case 1:
             gridComponent = (

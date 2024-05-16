@@ -4,28 +4,36 @@ const APIUrl = import.meta.env.VITE_API_URL
 const getAllPropertiesService = async () => {
     const res = await fetch(`${APIUrl}/properties`)
 
-    const body = await res.json()
+    if (res.status === 200) {
+        const body = await res.json()
 
-    return body
+        return body
+    }
+    return
 }
 
 // Ver todas las propiedades filtradas
 const getAllFilterPropertiesService = async (params = "") => {
     const res = await fetch(`${APIUrl}/properties?${params}`)
-    if (res.status !== 200) {
-        return
-    }
-    const body = await res.json()
 
-    return body
+    if (res.status === 200) {
+        const body = await res.json()
+
+        return body
+    }
+    return
 }
 
 // Ver una propiedad en detalle
 const getPropertyDetailsService = async (id) => {
     const res = await fetch(`${APIUrl}/properties/${id}`)
-    const body = await res.json()
 
-    return body
+    if (res.status === 200) {
+        const body = await res.json()
+
+        return body
+    }
+    return
 }
 
 const addPropertyService = async (token, propertyForm) => {
@@ -36,9 +44,13 @@ const addPropertyService = async (token, propertyForm) => {
         },
         body: propertyForm,
     })
-    const body = await res.json()
 
-    return body
+    if (res.status === 200) {
+        const body = await res.json()
+
+        return body
+    }
+    return
 }
 
 export {
