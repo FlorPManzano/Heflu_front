@@ -12,6 +12,7 @@ import { PiBathtub } from "react-icons/pi"
 import { BiArea } from "react-icons/bi"
 import { IoBedOutline } from "react-icons/io5"
 import { FaStar } from "react-icons/fa6"
+import ListReviewCards from "../components/ListReviewCards"
 
 const APIUrl = import.meta.env.VITE_API_URL
 
@@ -166,12 +167,9 @@ export default function PropertyDetailsPage() {
                     </figure>
                 </header>
                 <ul className=" flex gap-5 mt-2 p-4 border-t  border-gray-500 ">
-                    {property.reviews &&
-                        property.reviews.map((review) => (
-                            <li key={review.id}>
-                                <ReviewCard review={review}></ReviewCard>
-                            </li>
-                        ))}
+                    {property.reviews && (
+                        <ListReviewCards reviews={property.reviews} />
+                    )}
                 </ul>
             </section>
         </section>
