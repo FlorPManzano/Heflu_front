@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
             setLoading(true)
 
             const body = await registerUserService(registerForm)
-            if (body.status !== "ok") {
+            if (body !== undefined) {
                 toast.error(await body?.message, {
                     position: "top-center",
                     autoClose: 5000,
