@@ -52,8 +52,10 @@ export const AuthProvider = ({ children }) => {
         try {
             setLoading(true)
 
-            const body = await registerUserService(registerForm)
-            if (body !== undefined) {
+            const res = await registerUserService(registerForm)
+
+            if (!res.ok) {
+                const body = await res.json()
                 toast.error(await body?.message, {
                     position: "top-center",
                     autoClose: 5000,
@@ -66,20 +68,20 @@ export const AuthProvider = ({ children }) => {
                     transition: Bounce,
                 })
                 return false
-            } else {
-                toast("¡Te has registrado correctamente!", {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                })
-                return true
             }
+
+            toast("¡Te has registrado correctamente!", {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            })
+            return true
         } catch (err) {
             console.log(err.message)
         } finally {

@@ -8,10 +8,9 @@ const registerUserService = async (registerForm) => {
     })
 
     if (res.status === 200) {
-        const body = await res.json()
-
-        return body
+        return res
     }
+    return res
 }
 
 // Validar un usuario
