@@ -103,7 +103,7 @@ export default function ViewUserProfilePage() {
                             </p>
                         </div>
                     </div>
-                    <p className="text-md leading-relaxed mb-10">
+                    <p className="text-md leading-relaxed min-w-6 max-w-screen-lg   bg-slate-100 p-4 mb-10 rounded-xl">
                         {authUser.bio}
                     </p>
                     <section className="min-h-96  ">
