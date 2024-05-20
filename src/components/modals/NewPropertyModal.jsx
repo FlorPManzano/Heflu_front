@@ -44,13 +44,16 @@ const NewPropertyModal = ({
         }
 
         try {
-            const { data } = await addProperty(formData)
-            const newProperty = await data
+            const body = await addProperty(formData)
 
-            if (filterProperties == true) {
-                setFilterProperties([...filterProperties, newProperty])
-            } else setFilterProperties([newProperty])
-            setNewPropertyModal(false)
+            if (body) {
+                const newProperty = await body.data
+
+                if ((await filterProperties.length) > 0) {
+                    setFilterProperties([...filterProperties, newProperty])
+                } else setFilterProperties([newProperty])
+                setNewPropertyModal(false)
+            }
         } catch (error) {
             console.log(error.message)
         }
