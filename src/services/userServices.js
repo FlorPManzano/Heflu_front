@@ -7,9 +7,6 @@ const registerUserService = async (registerForm) => {
         body: registerForm,
     })
 
-    if (res.status === 200) {
-        return res
-    }
     return res
 }
 
@@ -39,12 +36,7 @@ const loginUserService = async (email, password) => {
         },
         body: JSON.stringify({ email, password }),
     })
-
-    if (res.status === 200) {
-        const body = await res.json()
-
-        return body
-    }
+    return res
 }
 
 // Ver perfil privado de un usuario

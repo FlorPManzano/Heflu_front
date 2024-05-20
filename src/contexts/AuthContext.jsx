@@ -94,10 +94,11 @@ export const AuthProvider = ({ children }) => {
         try {
             setLoading(true)
 
-            const body = await loginUserService(email, password)
+            const res = await loginUserService(email, password)
 
-            if (body.status !== "ok") {
-                toast.error(await body?.message, {
+            if (res.ok == false) {
+                const body = await res.json()
+                toast.error(await body.message, {
                     position: "top-center",
                     autoClose: 5000,
                     hideProgressBar: false,
@@ -108,13 +109,16 @@ export const AuthProvider = ({ children }) => {
                     theme: "light",
                     transition: Bounce,
                 })
+                return true
             }
 
+            const body = await res.json()
             // Almacenamos el token en el localStorage.
             localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, body.data.token)
 
             // Almacenamos el token en el State.
             setAuthToken(body.data.token)
+            return false
         } catch (err) {
             console.log(err.message)
         } finally {
