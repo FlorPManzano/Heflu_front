@@ -16,8 +16,7 @@ const LoginModal = ({ setLoginModal, openRegisterModal }) => {
     const logInSubmit = async (e) => {
         e.preventDefault()
         try {
-            await authLogin({ email, password })
-            setLoginModal(false)
+            setLoginModal(await authLogin({ email, password }))
         } catch (error) {
             console.log(error.message)
         }

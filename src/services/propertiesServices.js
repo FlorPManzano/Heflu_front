@@ -45,12 +45,7 @@ const addPropertyService = async (token, propertyForm) => {
         body: propertyForm,
     })
 
-    if (res.status === 200) {
-        const body = await res.json()
-
-        return body
-    }
-    return
+    return res
 }
 
 export {

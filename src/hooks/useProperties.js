@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { Bounce, toast } from "react-toastify"
 import {
     getAllPropertiesService,
     addPropertyService,
@@ -31,7 +32,38 @@ export const useProperties = () => {
     const addProperty = async (formData) => {
         setLoading(true)
         try {
-            const body = await addPropertyService(authToken, formData)
+            const res = await addPropertyService(authToken, formData)
+
+            if (!res.ok) {
+                const body = await res.json()
+                toast.error(await body?.message, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light",
+                    transition: Bounce,
+                })
+
+                return false
+            }
+
+            const body = await res.json()
+            toast(await body?.message, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+                transition: Bounce,
+            })
+
             return body
         } catch (err) {
             console.log(err.message)
