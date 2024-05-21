@@ -1,6 +1,7 @@
 import { useState, useRef } from "react"
 import { useProperties } from "../../hooks/useProperties"
 import Logo from "/heflu-logo.svg"
+import { useNavigate } from "react-router-dom"
 
 const NewPropertyModal = ({
     setNewPropertyModal,
@@ -21,6 +22,7 @@ const NewPropertyModal = ({
     const [bathrooms, setBathrooms] = useState()
 
     const fileInputRef = useRef()
+    const navigate = useNavigate()
 
     const propertySubmit = async (e) => {
         e.preventDefault()
@@ -53,6 +55,7 @@ const NewPropertyModal = ({
                     setFilterProperties([...filterProperties, newProperty])
                 } else setFilterProperties([newProperty])
                 setNewPropertyModal(false)
+                navigate("/")
             }
         } catch (error) {
             console.log(error.message)
