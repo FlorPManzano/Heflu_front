@@ -143,7 +143,7 @@ export default function PropertyDetailsPage() {
                     </h2>
                     <figure className="flex items-start gap-4">
                         <img
-                            className=" w-20 rounded-full"
+                            className="rounded-full object-cover h-20 w-20"
                             src={`${APIUrl}/${property.avatar}`}
                             alt=""
                         />

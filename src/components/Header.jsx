@@ -125,7 +125,7 @@ const Header = ({ filterProperties, setFilterProperties }) => {
                         Publicar Alquiler
                     </button>
                     <img
-                        className="rounded-full w-14 cursor-pointer"
+                        className="rounded-full object-cover h-14 w-14 cursor-pointer"
                         src={`${APIUrl}/${authUser.avatar}`}
                         alt="Avatar"
                         onClick={handleClick}

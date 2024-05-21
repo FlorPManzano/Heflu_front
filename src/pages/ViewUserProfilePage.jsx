@@ -80,7 +80,7 @@ export default function ViewUserProfilePage() {
                 <>
                     <div className="flex items-center justify-start gap-x-2 my-6">
                         <img
-                            className="rounded-full w-24"
+                            className="rounded-full object-cover h-24 w-24"
                             src={`${APIUrl}/${authUser.avatar}`}
                             alt=""
                         />
