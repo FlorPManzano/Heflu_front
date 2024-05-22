@@ -1,5 +1,4 @@
 const APIUrl = import.meta.env.VITE_API_URL
-
 // Ver todas las propiedades
 const getAllPropertiesService = async () => {
     const res = await fetch(`${APIUrl}/properties`)
@@ -24,6 +23,16 @@ const getAllFilterPropertiesService = async (params = "") => {
     return
 }
 
+// Ver propiedades del usuario
+const getUserPropertiesService = async (id, token) => {
+    const res = await fetch(`${APIUrl}/users/${id}`, {
+        headers: {
+            Authorization: token,
+        },
+    })
+
+    return res
+}
 // Ver una propiedad en detalle
 const getPropertyDetailsService = async (id) => {
     const res = await fetch(`${APIUrl}/properties/${id}`)
@@ -40,7 +49,7 @@ const addPropertyService = async (token, propertyForm) => {
     const res = await fetch(`${APIUrl}/properties`, {
         method: "POST",
         headers: {
-            Authorization: token,
+            Authorization: authToken,
         },
         body: propertyForm,
     })
@@ -53,4 +62,5 @@ export {
     getAllFilterPropertiesService,
     getPropertyDetailsService,
     addPropertyService,
+    getUserPropertiesService,
 }

@@ -3,6 +3,7 @@ import { Bounce, toast } from "react-toastify"
 import {
     getAllPropertiesService,
     addPropertyService,
+    getUserPropertiesService,
 } from "../services/propertiesServices"
 import useAuth from "./useAuth"
 
@@ -77,11 +78,11 @@ export const useProperties = () => {
     const fetchUserProperties = async () => {
         try {
             setLoading(true)
-            const body = await getAllPropertiesService()
-            const filteredProperties = body.data.filter((property) => {
-                return property.owner_id === authUser.id
-            })
-            setUserProperties(filteredProperties)
+            const res = await getUserPropertiesService(authUser.id, authToken)
+            if (res.ok) {
+                const body = await res.json()
+                setUserProperties(body.data?.properties)
+            }
         } catch (err) {
             console.log(err.message)
         } finally {
