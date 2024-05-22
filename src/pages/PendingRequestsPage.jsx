@@ -3,7 +3,7 @@ import { useBookings } from "../hooks/useBookings"
 const APIUrl = import.meta.env.VITE_API_URL
 
 export default function PendingRequestsPage() {
-    const { bookings, acceptBooking, cancelBooking } = useBookings()
+    const { ownerBookings, acceptBooking, cancelBooking } = useBookings()
 
     function formatDate(dateString) {
         const weekDays = [
@@ -62,8 +62,8 @@ export default function PendingRequestsPage() {
                 Mis solicitudes pendientes
             </h2>
             <ul className=" flex flex-col gap-y-4 items-center">
-                {bookings && bookings.length > 0 ? (
-                    bookings.map((booking) => (
+                {ownerBookings && ownerBookings.length > 0 ? (
+                    ownerBookings.map((booking) => (
                         <li key={booking.id}>
                             <article className="flex gap-6 p-4 border border-primary/20 rounded-2xl shadow-md max-w-[760px]">
                                 {booking.images && booking.images.length > 0 ? (
