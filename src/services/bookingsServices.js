@@ -1,8 +1,21 @@
 const APIUrl = import.meta.env.VITE_API_URL
 
+// Ver todas las solicitudes de reserva a un usuario
+const getOwnerBookingsService = async (token) => {
+    const res = await fetch(`${APIUrl}/bookings/asOwner`, {
+        headers: {
+            Authorization: token,
+        },
+    })
+    if (res.status !== 200) return
+    const body = await res.json()
+
+    return body
+}
+
 // Ver todas las solicitudes de reserva de un usuario
-const getBookingsService = async (token) => {
-    const res = await fetch(`${APIUrl}/bookings`, {
+const getTenantBookingsService = async (token) => {
+    const res = await fetch(`${APIUrl}/bookings/asTenant`, {
         headers: {
             Authorization: token,
         },
@@ -65,7 +78,8 @@ const cancelBookingService = async (token, id) => {
 }
 
 export {
-    getBookingsService,
+    getOwnerBookingsService,
+    getTenantBookingsService,
     addBookingService,
     confirmBookingService,
     cancelBookingService,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import {
-    getBookingsService,
+    getOwnerBookingsService,
+    getTenantBookingsService,
     addBookingService,
     confirmBookingService,
     cancelBookingService,
@@ -10,22 +11,23 @@ import useAuth from "./useAuth"
 import { toast, Bounce } from "react-toastify"
 
 export const useBookings = () => {
-    const [bookings, setBookings] = useState({})
+    const [ownerBookings, setOwnerBookings] = useState({})
+    const [tenantBookings, setTenantBookings] = useState({})
     const [loading, setLoading] = useState(false)
     const { authUser, authToken } = useAuth()
     const [flag, setFlag] = useState(false)
 
     useEffect(() => {
-        const getBookings = async () => {
+        const getOwnerBookings = async () => {
             try {
                 setLoading(true)
                 if (!authUser || !authToken) return
-                const bookings = await getBookingsService(authToken)
+                const bookings = await getOwnerBookingsService(authToken)
 
                 if (bookings == undefined) {
-                    setBookings([])
+                    setOwnerBookings([])
                 } else {
-                    setBookings(bookings.data)
+                    setOwnerBookings(bookings.data)
                 }
             } catch (error) {
                 console.log(error.message)
@@ -33,7 +35,26 @@ export const useBookings = () => {
                 setLoading(false)
             }
         }
-        getBookings()
+
+        const getTenantBookings = async () => {
+            try {
+                setLoading(true)
+                if (!authUser || !authToken) return
+                const bookings = await getTenantBookingsService(authToken)
+                if (bookings == undefined) {
+                    setTenantBookings([])
+                } else {
+                    setTenantBookings(bookings.data)
+                }
+            } catch (error) {
+                console.log(error.message)
+            } finally {
+                setLoading(false)
+            }
+        }
+
+        getOwnerBookings()
+        getTenantBookings()
     }, [authToken, authUser, flag])
 
     // Función para crear reservas
@@ -104,7 +125,7 @@ export const useBookings = () => {
         try {
             const body = await confirmBookingService(authToken, bookingId)
             if (body.status === "ok") {
-                setBookings((prevBookings) =>
+                setOwnerBookings((prevBookings) =>
                     prevBookings.filter((booking) => booking.id !== bookingId)
                 )
                 setFlag(!flag)
@@ -132,7 +153,7 @@ export const useBookings = () => {
         try {
             const body = await cancelBookingService(authToken, bookingId)
             if (body.status === "ok") {
-                setBookings((prevBookings) =>
+                setOwnerBookings((prevBookings) =>
                     prevBookings.filter((booking) => booking.id !== bookingId)
                 )
                 setFlag(!flag)
@@ -156,7 +177,8 @@ export const useBookings = () => {
     }
 
     return {
-        bookings,
+        tenantBookings,
+        ownerBookings,
         loading,
         addBooking,
         acceptBooking,
