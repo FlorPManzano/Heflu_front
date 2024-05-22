@@ -43,7 +43,10 @@ const Header = ({ filterProperties, setFilterProperties }) => {
         navigate("/profile/requests")
         handleClose()
     }
-
+    const handleClickBookings = () => {
+        navigate("/profile/bookings")
+        handleClose()
+    }
     const handleClickReviews = () => {
         navigate("/profile/reviews")
         handleClose()
@@ -149,6 +152,7 @@ const Header = ({ filterProperties, setFilterProperties }) => {
                 <MenuItem onClick={handleClickReviews}>
                     Valoraciones pendientes
                 </MenuItem>
+                <MenuItem onClick={handleClickBookings}>Mis reservas</MenuItem>
                 <MenuItem onClick={handleClickLogout}>Cerrar sesión</MenuItem>
             </Menu>
 

@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom"
 
 // Importación de páginas
 import HomePage from "./pages/HomePage"
+import BookingsPage from "./pages/BookingsPage"
 import PendingRequestsPage from "./pages/PendingRequestsPage"
 import PendingReviewsPage from "./pages/PendingReviewsPage"
 import PropertyDetailsPage from "./pages/PropertyDetailsPage"
@@ -50,6 +51,10 @@ function App() {
                         <Route
                             path="/profile/reviews"
                             element={<PendingReviewsPage />}
+                        />
+                        <Route
+                            path="/profile/bookings"
+                            element={<BookingsPage />}
                         />
                         <Route
                             path="/profile/requests"
