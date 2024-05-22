@@ -95,10 +95,7 @@ export default function ViewUserProfilePage() {
                                         {authUser.media_rating}
                                     </span>
                                 ) : (
-                                    <p>
-                                        Este usuario no tiene valoraciones
-                                        todavía
-                                    </p>
+                                    "Este usuario no tiene valoraciones todavía"
                                 )}
                             </p>
                         </div>
