@@ -41,10 +41,8 @@ const addBookingService = async (
         },
         body: JSON.stringify({ id: property_id, starting_date, ending_date }),
     })
-    if (res.status !== 200) return
-    const body = await res.json()
 
-    return body
+    return res
 }
 
 // Aceptar una reserva

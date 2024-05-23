@@ -61,14 +61,15 @@ export const useBookings = () => {
     const addBooking = async (propertyId, startDate, endDate) => {
         setLoading(true)
         try {
-            const body = await addBookingService(
+            const res = await addBookingService(
                 authToken,
                 propertyId,
                 startDate,
                 endDate
             )
-
-            if (body.status === 400) {
+            console.log(res)
+            if (res.ok == false) {
+                const body = await res.json()
                 toast.error(body.message, {
                     position: "top-center",
                     autoClose: 5000,
@@ -83,22 +84,8 @@ export const useBookings = () => {
                 return
             }
 
-            if (body.status !== "ok") {
-                toast.error(body.message, {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                })
-                return
-            }
-
-            if (body.status === "ok") {
+            if (res.ok) {
+                const body = await res.json()
                 toast(body.message, {
                     position: "top-center",
                     autoClose: 5000,
