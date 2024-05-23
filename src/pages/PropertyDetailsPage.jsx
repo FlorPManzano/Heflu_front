@@ -168,7 +168,11 @@ export default function PropertyDetailsPage() {
                 </header>
                 <ul className=" flex gap-5 mt-2 p-4 border-t  border-gray-500 ">
                     {property.reviews && (
-                        <ListReviewCards reviews={property.reviews} />
+                        <ListReviewCards
+                            reviews={property.reviews.filter(
+                                (review) => review.rev_type == "as_owner"
+                            )}
+                        />
                     )}
                 </ul>
             </section>
