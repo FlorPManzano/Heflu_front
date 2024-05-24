@@ -45,7 +45,7 @@ function App() {
                     {/* Rutas privadas */}
                     <Route element={<PrivateRoutes />}>
                         <Route
-                            path="/profile/"
+                            path="/profile/:id"
                             element={<ViewUserProfilePage />}
                         />
                         <Route

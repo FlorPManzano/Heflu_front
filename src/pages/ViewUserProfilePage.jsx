@@ -1,46 +1,21 @@
-import { useEffect, useState } from "react"
-import useAuth from "../hooks/useAuth"
 import { useProperties } from "../hooks/useProperties"
-import { getUserReviewsProfileService } from "../services/userServices"
 import notFoundImage from "/not-found.png"
 import ListPropertiesCards from "../components/ListPropertiesCards"
 import { FaStar } from "react-icons/fa"
 import ListReviewCards from "../components/ListReviewCards"
-
+import { useParams } from "react-router-dom"
+import { useUser } from "../hooks/useUser"
 const APIUrl = import.meta.env.VITE_API_URL
 
 export default function ViewUserProfilePage() {
-    const { authUser, authToken } = useAuth()
     const { userProperties } = useProperties()
-    const [reviews, setReviews] = useState([])
-    const [loading, setLoading] = useState(false)
-
-    useEffect(() => {
-        const fetchReviews = async () => {
-            try {
-                setLoading(true)
-                if (!authUser) return
-                const body = await getUserReviewsProfileService(
-                    authToken,
-                    authUser.id
-                )
-
-                if (body != undefined) {
-                    setReviews(body.data)
-                }
-            } catch (err) {
-                console.log(err.message)
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchReviews()
-    }, [authUser])
+    const { id } = useParams()
+    const { user, userReviews, loading } = useUser(id)
 
     // Función para sacar la media de las valoraciones
     const getMediaRating = (type) => {
         if (type === "as_owner") {
-            const filterReviews = reviews.filter(
+            const filterReviews = userReviews.filter(
                 (review) => review.rev_type === type
             )
             const media =
@@ -52,7 +27,7 @@ export default function ViewUserProfilePage() {
             return media.toFixed(1)
         }
         if (type === "as_tenant") {
-            const filterReviews = reviews.filter(
+            const filterReviews = userReviews.filter(
                 (review) => review.rev_type === type
             )
             const media =
@@ -64,10 +39,10 @@ export default function ViewUserProfilePage() {
             return media.toFixed(1)
         }
     }
-    const tenantReviews = reviews.filter(
+    const tenantReviews = userReviews.filter(
         (review) => review.rev_type === "as_tenant"
     )
-    const ownerReviews = reviews.filter(
+    const ownerReviews = userReviews.filter(
         (review) => review.rev_type === "as_owner"
     )
 
@@ -76,23 +51,23 @@ export default function ViewUserProfilePage() {
             <h2 className="text-3xl text-violet-700 font-bold border-b border-primary/40 pb-2 mb-4 tracking-wide">
                 Perfil
             </h2>
-            {authUser && (
+            {user && (
                 <>
                     <div className="flex items-center justify-start gap-x-2 my-6">
                         <img
                             className="rounded-full object-cover h-24 w-24"
-                            src={`${APIUrl}/${authUser.avatar}`}
+                            src={`${APIUrl}/${user.avatar}`}
                             alt=""
                         />
                         <div>
                             <h4 className="font-semibold text-xl">
-                                {authUser.name}
+                                {user.name}
                             </h4>
                             <p className="flex gap-x-2 font-medium text-sm">
-                                {authUser.media_rating > 0 ? (
+                                {user.media_rating > 0 ? (
                                     <span className="flex items-center gap-x-1">
                                         <FaStar className="text-md" />
-                                        {authUser.media_rating}
+                                        {user.media_rating}
                                     </span>
                                 ) : (
                                     "Este usuario no tiene valoraciones todavía"
@@ -101,7 +76,7 @@ export default function ViewUserProfilePage() {
                         </div>
                     </div>
                     <p className="text-md leading-relaxed min-w-6 max-w-screen-lg   bg-slate-100 p-4 mb-10 rounded-xl">
-                        {authUser.bio}
+                        {user.bio}
                     </p>
                     <section className="min-h-96  ">
                         <h3 className="font-semibold text-3xl text-primary mb-8">
