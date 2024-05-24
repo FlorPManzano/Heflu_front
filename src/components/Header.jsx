@@ -35,7 +35,7 @@ const Header = ({ filterProperties, setFilterProperties }) => {
     const open = Boolean(anchorEl)
 
     const handleClickProfile = () => {
-        navigate("/profile")
+        navigate(`/profile/${authUser.id}`)
         handleClose()
     }
 
