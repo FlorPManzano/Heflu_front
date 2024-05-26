@@ -1,11 +1,10 @@
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import { useState } from "react"
 import { useProperty } from "../hooks/useProperty"
 import { useBookings } from "../hooks/useBookings"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 
-import ReviewCard from "../components/ReviewCard"
 import BentoGrid from "../components/BentoGrid"
 
 import { PiBathtub } from "react-icons/pi"
@@ -142,11 +141,15 @@ export default function PropertyDetailsPage() {
                         Anfitrión
                     </h2>
                     <figure className="flex items-start gap-4">
-                        <img
-                            className="rounded-full object-cover h-20 w-20"
-                            src={`${APIUrl}/${property.avatar}`}
-                            alt=""
-                        />
+                        <Link
+                            to={`/profile/${property.owner_id}`}
+                            reloadDocument
+                        >
+                            <img
+                                className="w-20 h-20 object-cover rounded-full"
+                                src={`${APIUrl}/${property.avatar}`}
+                            />
+                        </Link>
                         <ul>
                             <li>
                                 <h4 className=" font-semibold text-2xl">
