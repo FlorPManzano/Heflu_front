@@ -1,9 +1,10 @@
 import { FaStar } from "react-icons/fa6"
+import { Link } from "react-router-dom"
 
 const APIUrl = import.meta.env.VITE_API_URL
 
 const ReviewCard = ({ review }) => {
-    const { avatar, name, created_at, rating, comment } = review
+    const { avatar, user_id, name, created_at, rating, comment } = review
     const formatDateToText = (dateString) => {
         const date = new Date(dateString)
 
@@ -47,10 +48,12 @@ const ReviewCard = ({ review }) => {
     return (
         <article className="flex flex-col gap-4 h-36 lg:text-lg  w-96 p-3 border rounded-lg shadow-md">
             <header className="flex  gap-4 justify-start items-start">
-                <img
-                    className="w-14 h-14 rounded-full"
-                    src={`${APIUrl}/${avatar}`}
-                />
+                <Link to={`/profile/${user_id}`} reloadDocument>
+                    <img
+                        className="w-14 h-14 object cover rounded-full"
+                        src={`${APIUrl}/${avatar}`}
+                    />
+                </Link>
                 <div className=" grow flex flex-col">
                     <h5 className="font-semibold text-md">{name}</h5>
                     <p className="text-xs">
