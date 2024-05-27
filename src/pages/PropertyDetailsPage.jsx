@@ -157,14 +157,21 @@ export default function PropertyDetailsPage() {
                                 </h4>
                             </li>
                             <li>
-                                <ul className="flex items-center gap-2 mb-2">
-                                    <li className="text-primary">
-                                        <FaStar />
-                                    </li>
-                                    <li className="font-semibold pt-1">
-                                        {media_rating}
-                                    </li>
-                                </ul>
+                                {media_rating > 0 ? (
+                                    <ul className="flex items-center gap-2 mb-2">
+                                        <li className="text-primary">
+                                            <FaStar />
+                                        </li>
+                                        <li className="font-semibold pt-1">
+                                            {media_rating}
+                                        </li>
+                                    </ul>
+                                ) : (
+                                    <p>
+                                        Este usuario no tiene valoraciones
+                                        todavía
+                                    </p>
+                                )}
                             </li>
                         </ul>
                     </figure>
