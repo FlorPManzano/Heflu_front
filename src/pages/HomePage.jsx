@@ -103,38 +103,39 @@ export default function HomePage({ filterProperties }) {
         <>
             <Hero />
 
-            <section className="m-10">
+            <section className="m-10 flex flex-col items-center  ">
                 {/* Filtros */}
-                <section className="flex gap-x-8 items-center">
-                    <label
-                        htmlFor=""
-                        className="block mb-2 text-md font-medium text-violet-700"
-                    >
-                        Selecciona un destino:
+                <div className=" justify-self-end border border-gray-400 flex p-8 gap-x-10 justify-between items-baseline rounded-xl ">
+                    <label htmlFor="country" className="block mb-2">
                         <select
                             value={country}
+                            id="country"
                             onChange={handleSelectChangeCountry}
-                            className=" border border-gray-400 text-primary text-sm rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5"
+                            className=" border border-gray-400 text-violet-700 text-md font-medium rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5"
                         >
-                            <option value="">Todos</option>
+                            <option value="">Destino</option>
                             {uniqueCountrys.map((country) => (
-                                <option key={country} value={country}>
+                                <option
+                                    className="text-violet-700 "
+                                    key={country}
+                                    value={country}
+                                >
                                     {country}
                                 </option>
                             ))}
                         </select>
                     </label>
                     <label
-                        htmlFor=""
+                        htmlFor="maxPrice"
                         className="block mb-2 text-md font-medium text-violet-700"
                     >
-                        Selecciona un precio máximo:
                         <select
                             value={maxPrice}
+                            id="maxPrice"
                             onChange={handleSelectChangeMaxPrice}
-                            className=" border border-gray-400 text-primary text-sm rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5"
+                            className=" border border-gray-400 text-violet-700 text-md font-medium rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5"
                         >
-                            <option value="">Todos</option>
+                            <option value="">Precio máximo</option>
                             <option value="50">50</option>
                             <option value="100">100</option>
                             <option value="150">150</option>
@@ -142,16 +143,16 @@ export default function HomePage({ filterProperties }) {
                         </select>
                     </label>
                     <label
-                        htmlFor=""
+                        htmlFor="minRooms"
                         className="block mb-2 text-md font-medium text-violet-700"
                     >
-                        Selecciona habitaciones mínimas:
                         <select
                             value={minRooms}
+                            id="minRooms"
                             onChange={handleSelectChangeMinRooms}
-                            className=" border border-gray-400 text-primary text-sm rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5"
+                            className=" border border-gray-400 text-violet-700 text-md font-medium rounded-lg focus:ring-violet-700 focus:border-violet-700 block w-full p-2.5"
                         >
-                            <option value="">Todas</option>
+                            <option value="">Habitaciones mínimas</option>
                             <option value="1">1 o más</option>
                             <option value="2">2 o más</option>
                             <option value="3">3 o más</option>
@@ -167,7 +168,7 @@ export default function HomePage({ filterProperties }) {
                         minDate={new Date()}
                         selectsRange
                         selectsDisabledDaysInRange
-                        placeholderText="Selecciona un rango de fechas"
+                        placeholderText="Rango de fechas"
                         showIcon
                         className="text-primary"
                     />
@@ -178,7 +179,7 @@ export default function HomePage({ filterProperties }) {
                     >
                         Limpiar filtros
                     </button>
-                </section>
+                </div>
 
                 <section className=" flex-col justify-center items-center min-h-40 mt-5">
                     {filterProperties?.length > 0 ? (
