@@ -22,21 +22,23 @@ const PropertyCard = ({ property }) => {
                 className="object-cover h-64 w-64 mb-3 rounded-tl-[80px] rounded-br-[80px]  "
                 src={imgURL}
             />
-            <ul className="text-xs flex justify-end items-center gap-1 mb-2">
+            <ul className="text-xs flex justify-start items-center gap-1 mb-2">
                 <li className=" h-8 rounded-2xl p-2 text-white bg-emerald-500">
                     {type}
                 </li>
                 <li className=" h-8 rounded-2xl p-2 text-white bg-violet-700">
                     {country}
                 </li>
-                <li className=" text-lg text-end grow">
-                    <ul className="grow flex justify-end items-center gap-1">
-                        <li>
-                            <FaStar />
-                        </li>
-                        <li>{media_rating}</li>
-                    </ul>
-                </li>
+                {media_rating > 0 && (
+                    <li className=" text-lg text-end grow">
+                        <ul className="grow flex justify-end items-center gap-1">
+                            <li>
+                                <FaStar />
+                            </li>
+                            <li>{media_rating}</li>
+                        </ul>
+                    </li>
+                )}
             </ul>
             <section>
                 <h2 className="font-semibold mb-1">{location}</h2>
