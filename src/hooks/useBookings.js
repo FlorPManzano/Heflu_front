@@ -67,7 +67,6 @@ export const useBookings = () => {
                 startDate,
                 endDate
             )
-            console.log(res)
             if (res.ok == false) {
                 const body = await res.json()
                 toast.error(body.message, {

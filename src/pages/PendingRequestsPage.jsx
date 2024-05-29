@@ -1,4 +1,5 @@
 import { useBookings } from "../hooks/useBookings"
+import { Link } from "react-router-dom"
 
 const APIUrl = import.meta.env.VITE_API_URL
 
@@ -29,12 +30,11 @@ export default function PendingRequestsPage() {
             "Noviembre",
             "Diciembre",
         ]
-
         const date = new Date(dateString)
-        const weekDay = weekDays[date.getUTCDay()]
-        const day = date.getUTCDate()
-        const month = months[date.getUTCMonth()]
-        const year = date.getUTCFullYear()
+        const weekDay = weekDays[date.getDay()]
+        const day = date.getDate()
+        const month = months[date.getMonth()]
+        const year = date.getFullYear()
 
         return `${weekDay} ${day} de ${month} de ${year}`
     }
@@ -88,10 +88,15 @@ export default function PendingRequestsPage() {
                                             {booking.location}
                                         </span>{" "}
                                         a nombre de{" "}
-                                        <span className="font-semibold">
-                                            {booking.tenant}.
-                                        </span>{" "}
-                                        La información de la reserva es la
+                                        <span className="text-violet-700  underline font-semibold">
+                                            <Link
+                                                to={`/profile/${booking.tenant_id}`}
+                                                reloadDocument
+                                            >
+                                                {booking.tenant}
+                                            </Link>
+                                        </span>
+                                        . La información de la reserva es la
                                         siguiente:
                                     </p>
                                     <ul className="list-disc ml-5 text-sm">

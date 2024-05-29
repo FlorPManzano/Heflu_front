@@ -19,8 +19,8 @@ export default function PropertyDetailsPage() {
     const { id } = useParams()
     const { property } = useProperty(id)
     const { addBooking } = useBookings()
-    const [startDate, setStartDate] = useState("")
-    const [endDate, setEndDate] = useState("")
+    const [dateRange, setDateRange] = useState([null, null])
+    const [startDate, endDate] = dateRange
 
     let {
         country,
@@ -35,12 +35,6 @@ export default function PropertyDetailsPage() {
         title,
         area,
     } = property
-
-    const onChange = (dates) => {
-        const [start, end] = dates
-        setStartDate(start)
-        setEndDate(end)
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -119,7 +113,9 @@ export default function PropertyDetailsPage() {
                     >
                         <DatePicker
                             selected={startDate}
-                            onChange={onChange}
+                            onChange={(update) => {
+                                setDateRange(update)
+                            }}
                             startDate={startDate}
                             endDate={endDate}
                             minDate={new Date()}

@@ -8,8 +8,8 @@ import { useUser } from "../hooks/useUser"
 const APIUrl = import.meta.env.VITE_API_URL
 
 export default function ViewUserProfilePage() {
-    const { userProperties } = useProperties()
     const { id } = useParams()
+    const { userProperties } = useProperties(id)
     const { user, userReviews, loading } = useUser(id)
 
     // Función para sacar la media de las valoraciones
@@ -63,16 +63,6 @@ export default function ViewUserProfilePage() {
                             <h4 className="font-semibold text-xl">
                                 {user.name}
                             </h4>
-                            <p className="flex gap-x-2 font-medium text-sm">
-                                {user.media_rating > 0 ? (
-                                    <span className="flex items-center gap-x-1">
-                                        <FaStar className="text-md" />
-                                        {user.media_rating}
-                                    </span>
-                                ) : (
-                                    "Este usuario no tiene valoraciones todavía"
-                                )}
-                            </p>
                         </div>
                     </div>
                     <p className="text-md leading-relaxed min-w-6 max-w-screen-lg   bg-slate-100 p-4 mb-10 rounded-xl">

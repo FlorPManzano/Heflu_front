@@ -28,7 +28,6 @@ export const AuthProvider = ({ children }) => {
             try {
                 setLoading(true)
                 const tokenData = JSON.parse(atob(authToken.split(".")[1]))
-
                 const body = await getUserProfileService(
                     authToken,
                     tokenData.id

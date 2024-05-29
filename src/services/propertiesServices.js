@@ -45,7 +45,7 @@ const getPropertyDetailsService = async (id) => {
     return
 }
 
-const addPropertyService = async (token, propertyForm) => {
+const addPropertyService = async (authToken, propertyForm) => {
     const res = await fetch(`${APIUrl}/properties`, {
         method: "POST",
         headers: {
