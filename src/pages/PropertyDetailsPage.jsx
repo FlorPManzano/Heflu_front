@@ -152,16 +152,18 @@ export default function PropertyDetailsPage() {
                                     {property.name}
                                 </h4>
                             </li>
-                            <li>
-                                <ul className="flex items-center gap-2 mb-2">
-                                    <li className="text-primary">
-                                        <FaStar />
-                                    </li>
-                                    <li className="font-semibold pt-1">
-                                        {media_rating}
-                                    </li>
-                                </ul>
-                            </li>
+                            {media_rating && (
+                                <li>
+                                    <ul className="flex items-center gap-2 mb-2">
+                                        <li className="text-primary">
+                                            <FaStar />
+                                        </li>
+                                        <li className="font-semibold pt-1">
+                                            {media_rating}
+                                        </li>
+                                    </ul>
+                                </li>
+                            )}
                         </ul>
                     </figure>
                 </header>
