@@ -7,7 +7,7 @@ import {
 } from "../services/propertiesServices"
 import useAuth from "./useAuth"
 
-export const useProperties = () => {
+export const useProperties = (id) => {
     const [properties, setProperties] = useState([])
     const [userProperties, setUserProperties] = useState([])
     const [loading, setLoading] = useState(false)
@@ -26,7 +26,7 @@ export const useProperties = () => {
             }
         }
         fetchProperties()
-        if (authUser) fetchUserProperties()
+        if (id) fetchUserProperties()
     }, [authUser])
 
     // Función para añadir propiedades
@@ -78,7 +78,7 @@ export const useProperties = () => {
     const fetchUserProperties = async () => {
         try {
             setLoading(true)
-            const res = await getUserPropertiesService(authUser.id, authToken)
+            const res = await getUserPropertiesService(id, authToken)
             if (res.ok) {
                 const body = await res.json()
                 setUserProperties(body.data?.properties)
