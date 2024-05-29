@@ -1,5 +1,5 @@
 import { useBookings } from "../hooks/useBookings"
-
+import { Link } from "react-router-dom"
 const APIUrl = import.meta.env.VITE_API_URL
 
 export default function PendingRequestsPage() {
@@ -88,10 +88,15 @@ export default function PendingRequestsPage() {
                                             {booking.location}
                                         </span>{" "}
                                         a nombre de{" "}
-                                        <span className="font-semibold">
-                                            {booking.tenant}.
-                                        </span>{" "}
-                                        La información de la reserva es la
+                                        <span className="text-violet-700  underline font-semibold">
+                                            <Link
+                                                to={`/profile/${booking.tenant_id}`}
+                                                reloadDocument
+                                            >
+                                                {booking.tenant}
+                                            </Link>
+                                        </span>
+                                        . La información de la reserva es la
                                         siguiente:
                                     </p>
                                     <ul className="list-disc ml-5 text-sm">
