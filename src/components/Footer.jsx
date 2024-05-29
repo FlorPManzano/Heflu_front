@@ -3,10 +3,12 @@ const Footer = () => {
         {
             name: "Héctor",
             image: "/images/hector.jpg",
+            linkedin: "https://www.linkedin.com/in/hectornovoa/",
         },
         {
             name: "Flor",
             image: "/images/flor.jpg",
+            linkedin: "https://www.linkedin.com/in/florpmanzano/",
         },
     ]
     return (
@@ -22,14 +24,20 @@ const Footer = () => {
                                 className="flex flex-col items-center justify-center gap-y-1"
                                 key={member.name}
                             >
-                                <img
-                                    className="w-14 rounded-full"
-                                    src={member.image}
-                                    alt={`Foto de ${member.name}`}
-                                />
-                                <p className="text-sm font-light">
-                                    {member.name}
-                                </p>
+                                <a
+                                    className="text-sm font-light hover:underline cursor-pointer"
+                                    href={member.linkedin}
+                                    target="_blank"
+                                >
+                                    <img
+                                        className="w-14 rounded-full"
+                                        src={member.image}
+                                        alt={`Foto de ${member.name}`}
+                                    />
+                                    <p className="text-sm font-light">
+                                        {member.name}
+                                    </p>
+                                </a>
                             </li>
                         ))}
                     </ul>
