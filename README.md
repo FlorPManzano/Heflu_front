@@ -1,6 +1,6 @@
 
 ### Language: [EN](#heflu_back_en) | [ES](#heflu_back_es)  
-# Heflu_back_EN
+# Heflu_front_EN
 
 Frontend developed with React for [Heflu API](https://github.com/HectornsGit/Heflu_back).
 
@@ -31,7 +31,7 @@ Frontend developed with React for [Heflu API](https://github.com/HectornsGit/Hef
  - Run the script `dev`.
 
 
-# Heflu_back_ES
+# Heflu_front_ES
 
 Frontend desarrollado en React para la aplicación [Heflu API](https://github.com/HectornsGit/Heflu_back).
 
