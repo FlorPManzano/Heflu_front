@@ -7,8 +7,7 @@ import {
     cancelBookingService,
 } from "../services/bookingsServices"
 import useAuth from "./useAuth"
-
-import { toast, Bounce } from "react-toastify"
+import { sendErrorToast, sendSuccessToast } from "../utils/sendToast"
 
 export const useBookings = () => {
     const [ownerBookings, setOwnerBookings] = useState({})
@@ -21,8 +20,19 @@ export const useBookings = () => {
         const getOwnerBookings = async () => {
             try {
                 setLoading(true)
+
                 if (!authUser || !authToken) return
-                const bookings = await getOwnerBookingsService(authToken)
+
+                const res = await getOwnerBookingsService(authToken)
+
+                if (res.ok == false) {
+                    const body = await res.json()
+                    sendErrorToast(body)
+                }
+
+                let bookings
+
+                if (res.status === 200) bookings = await res.json()
 
                 if (bookings == undefined) {
                     setOwnerBookings([])
@@ -40,7 +50,18 @@ export const useBookings = () => {
             try {
                 setLoading(true)
                 if (!authUser || !authToken) return
-                const bookings = await getTenantBookingsService(authToken)
+
+                const res = await getTenantBookingsService(authToken)
+
+                if (res.ok == false) {
+                    const body = await res.json()
+                    sendErrorToast(body)
+                }
+
+                let bookings
+
+                if (res.status === 200) bookings = await res.json()
+
                 if (bookings == undefined) {
                     setTenantBookings([])
                 } else {
@@ -67,35 +88,16 @@ export const useBookings = () => {
                 startDate,
                 endDate
             )
+
             if (res.ok == false) {
                 const body = await res.json()
-                toast.error(body.message, {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                })
+                sendErrorToast(body)
                 return
             }
 
             if (res.ok) {
                 const body = await res.json()
-                toast(body.message, {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                })
+                sendSuccessToast(body)
                 setFlag(!flag)
             }
         } catch (err) {
@@ -109,23 +111,17 @@ export const useBookings = () => {
     const acceptBooking = async (bookingId) => {
         setLoading(true)
         try {
-            const body = await confirmBookingService(authToken, bookingId)
-            if (body.status === "ok") {
+            const res = await confirmBookingService(authToken, bookingId)
+            if (res.ok) {
+                const body = await res.json()
                 setOwnerBookings((prevBookings) =>
                     prevBookings.filter((booking) => booking.id !== bookingId)
                 )
                 setFlag(!flag)
-                toast("¡Has aceptado la reserva!", {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                })
+                sendSuccessToast(body)
+            } else {
+                const body = await res.json()
+                sendErrorToast(body)
             }
         } catch (err) {
             console.log(err.message)
@@ -137,23 +133,17 @@ export const useBookings = () => {
     const cancelBooking = async (bookingId) => {
         setLoading(true)
         try {
-            const body = await cancelBookingService(authToken, bookingId)
-            if (body.status === "ok") {
+            const res = await cancelBookingService(authToken, bookingId)
+            if (res.ok) {
                 setOwnerBookings((prevBookings) =>
                     prevBookings.filter((booking) => booking.id !== bookingId)
                 )
                 setFlag(!flag)
-                toast("¡Has rechazado la reserva!", {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                })
+                const body = await res.json()
+                sendSuccessToast(body)
+            } else {
+                const body = await res.json()
+                sendErrorToast(body)
             }
         } catch (err) {
             console.log(err.message)
