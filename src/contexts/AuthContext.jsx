@@ -8,7 +8,7 @@ import {
     getUserProfileService,
     validateUserService,
 } from "../services/userServices"
-import { toast, Bounce } from "react-toastify"
+import { sendErrorToast, sendSuccessToast } from "../utils/sendToast"
 
 // Creamos un contexto.
 export const AuthContext = createContext(null)
@@ -28,13 +28,15 @@ export const AuthProvider = ({ children }) => {
             try {
                 setLoading(true)
                 const tokenData = JSON.parse(atob(authToken.split(".")[1]))
-                const body = await getUserProfileService(
-                    authToken,
-                    tokenData.id
-                )
+                const res = await getUserProfileService(authToken, tokenData.id)
+                if (res.ok) {
+                    const body = await res.json()
 
-                // Establecemos el valor del usuario.
-                setAuthUser(body.data.user)
+                    // Establecemos el valor del usuario.
+                    return setAuthUser(body.data.user)
+                }
+                const body = await res.json()
+                sendErrorToast(body)
             } catch (err) {
                 console.log(err.message)
             } finally {
@@ -55,31 +57,11 @@ export const AuthProvider = ({ children }) => {
 
             if (!res.ok) {
                 const body = await res.json()
-                toast.error(await body?.message, {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                })
+                sendErrorToast(body)
                 return false
             }
-
-            toast("¡Te has registrado correctamente!", {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-                transition: Bounce,
-            })
+            const body = await res.json()
+            sendSuccessToast(body)
             return true
         } catch (err) {
             console.log(err.message)
@@ -97,17 +79,7 @@ export const AuthProvider = ({ children }) => {
 
             if (res.ok == false) {
                 const body = await res.json()
-                toast.error(await body.message, {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                })
+                sendErrorToast(body)
                 return true
             }
 
@@ -139,27 +111,19 @@ export const AuthProvider = ({ children }) => {
         try {
             setLoading(true)
 
-            const body = await validateUserService(registration_code)
-
-            if (body.status !== "ok") {
-                toast.error(await body?.message, {
-                    position: "top-center",
-                    autoClose: 5000,
-                    hideProgressBar: false,
-                    closeOnClick: true,
-                    pauseOnHover: true,
-                    draggable: true,
-                    progress: undefined,
-                    theme: "light",
-                    transition: Bounce,
-                })
-            } else {
+            const res = await validateUserService(registration_code)
+            if (res.ok) {
+                const body = await res.json()
                 // Almacenamos el token en el localStorage.
                 localStorage.setItem(TOKEN_LOCAL_STORAGE_KEY, body.data.token)
 
                 // Almacenamos el token en el State.
-                setAuthToken(body.data.token)
+                return setAuthToken(body.data.token)
             }
+
+            const body = await res.json()
+
+            sendErrorToast(body)
         } catch (err) {
             console.log(err.message)
         } finally {

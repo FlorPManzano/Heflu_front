@@ -19,12 +19,7 @@ const validateUserService = async (registration_code) => {
         },
         body: JSON.stringify(),
     })
-
-    if (res.status === 200) {
-        const body = await res.json()
-
-        return body
-    }
+    return res
 }
 
 // Inicio de sesión
@@ -46,12 +41,7 @@ const getUserProfileService = async (token, id) => {
             Authorization: token,
         },
     })
-
-    if (res.status === 200) {
-        const body = await res.json()
-
-        return body
-    }
+    return res
 }
 
 // Ver todas las valoraciones de un usuario
