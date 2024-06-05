@@ -1,26 +1,10 @@
 const APIUrl = import.meta.env.VITE_API_URL
-// Ver todas las propiedades
-const getAllPropertiesService = async () => {
-    const res = await fetch(`${APIUrl}/properties`)
-
-    if (res.status === 200) {
-        const body = await res.json()
-
-        return body
-    }
-    return
-}
 
 // Ver todas las propiedades filtradas
-const getAllFilterPropertiesService = async (params = "") => {
+const getAllPropertiesService = async (params = "") => {
     const res = await fetch(`${APIUrl}/properties?${params}`)
 
-    if (res.status === 200) {
-        const body = await res.json()
-
-        return body
-    }
-    return
+    return res
 }
 
 // Ver propiedades del usuario
@@ -37,12 +21,7 @@ const getUserPropertiesService = async (id, token) => {
 const getPropertyDetailsService = async (id) => {
     const res = await fetch(`${APIUrl}/properties/${id}`)
 
-    if (res.status === 200) {
-        const body = await res.json()
-
-        return body
-    }
-    return
+    return res
 }
 
 const addPropertyService = async (authToken, propertyForm) => {
@@ -59,7 +38,6 @@ const addPropertyService = async (authToken, propertyForm) => {
 
 export {
     getAllPropertiesService,
-    getAllFilterPropertiesService,
     getPropertyDetailsService,
     addPropertyService,
     getUserPropertiesService,

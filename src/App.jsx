@@ -13,25 +13,19 @@ import ValidateUserPage from "./pages/ValidateUserPage"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import PrivateRoutes from "./components/PrivateRoutes"
-
-import { useFilterProperties } from "./hooks/useFilterProperties"
+import { useProperties } from "./hooks/useProperties"
 
 function App() {
-    const { filterProperties, setFilterProperties } = useFilterProperties()
+    const { properties, setProperties } = useProperties()
     return (
         <div className="flex flex-col">
-            <Header
-                setFilterProperties={setFilterProperties}
-                filterProperties={filterProperties}
-            />
+            <Header setProperties={setProperties} properties={properties} />
             <div className="min-h-screen flex-grow">
                 <Routes>
                     {/* Rutas públicas */}
                     <Route
                         path="/"
-                        element={
-                            <HomePage filterProperties={filterProperties} />
-                        }
+                        element={<HomePage properties={properties} />}
                     />
                     <Route
                         path="/properties/:id"

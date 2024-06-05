@@ -8,12 +8,7 @@ const getReviewsService = async (token) => {
         },
     })
 
-    if (res?.status !== 200) {
-        return
-    }
-    const body = await res.json()
-
-    return body
+    return res
 }
 
 // Crear una reseña
@@ -26,9 +21,8 @@ const addReviewService = async (token, id, rating, comment) => {
         },
         body: JSON.stringify({ rating, comment }),
     })
-    const body = await res.json()
 
-    return body
+    return res
 }
 
 export { getReviewsService, addReviewService }

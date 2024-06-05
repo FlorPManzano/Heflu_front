@@ -7,10 +7,7 @@ const getOwnerBookingsService = async (token) => {
             Authorization: token,
         },
     })
-    if (res.status !== 200) return
-    const body = await res.json()
-
-    return body
+    return res
 }
 
 // Ver todas las solicitudes de reserva de un usuario
@@ -20,10 +17,7 @@ const getTenantBookingsService = async (token) => {
             Authorization: token,
         },
     })
-    if (res.status !== 200) return
-    const body = await res.json()
-
-    return body
+    return res
 }
 
 // Crear una reserva
@@ -54,10 +48,8 @@ const confirmBookingService = async (token, id) => {
             "Content-Type": "application/json",
         },
     })
-    if (res.status !== 200) return
-    const body = await res.json()
 
-    return body
+    return res
 }
 
 // Rechazar una reserva
@@ -69,10 +61,7 @@ const cancelBookingService = async (token, id) => {
             "Content-Type": "application/json",
         },
     })
-    if (res.status !== 200) return
-    const body = await res.json()
-
-    return body
+    return res
 }
 
 export {

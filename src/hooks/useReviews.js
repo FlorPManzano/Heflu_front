@@ -3,6 +3,9 @@ import {
     getReviewsService,
     addReviewService,
 } from "../services/reviewsServices"
+
+import { sendErrorToast, sendSuccessToast } from "../utils/sendToast"
+
 import useAuth from "./useAuth"
 
 export const useReviews = () => {
@@ -16,11 +19,14 @@ export const useReviews = () => {
             try {
                 setLoading(true)
                 if (!authUser || !authToken) return
-                const reviews = await getReviewsService(authToken)
+                const res = await getReviewsService(authToken)
 
-                if (!reviews) return setReviews([])
-
-                setReviews(reviews.data)
+                if (res.ok) {
+                    if (res.status == 200) {
+                        const body = await res.json()
+                        setReviews(body.data)
+                    } else return setReviews([])
+                }
             } catch (error) {
                 console.log(error.message)
             } finally {
@@ -34,14 +40,21 @@ export const useReviews = () => {
     const addReview = async (bookingId, rating, comment) => {
         setLoading(true)
         try {
-            const body = await addReviewService(
+            const res = await addReviewService(
                 authToken,
                 bookingId,
                 rating,
                 comment
             )
-            setFlag(!flag)
-            return body
+            if (res.ok) {
+                const body = await res.json()
+                setFlag(!flag)
+                sendSuccessToast(body)
+                return true
+            } else {
+                const body = await res.json()
+                sendErrorToast(body)
+            }
         } catch (err) {
             console.log(err.message)
         } finally {

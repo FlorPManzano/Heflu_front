@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Bounce, toast } from "react-toastify"
+import { useSearchParams } from "react-router-dom"
 import {
     getAllPropertiesService,
     addPropertyService,
@@ -10,6 +11,7 @@ import useAuth from "./useAuth"
 export const useProperties = (id) => {
     const [properties, setProperties] = useState([])
     const [userProperties, setUserProperties] = useState([])
+    const [searchParams, setSearchParams] = useSearchParams()
     const [loading, setLoading] = useState(false)
     const { authToken, authUser } = useAuth()
 
@@ -17,17 +19,21 @@ export const useProperties = (id) => {
         const fetchProperties = async () => {
             try {
                 setLoading(true)
-                const body = await getAllPropertiesService()
-                setProperties(body.data)
+                const res = await getAllPropertiesService(searchParams)
+                if (res.ok) {
+                    const body = await res.json()
+                    setProperties(body?.data)
+                }
             } catch (err) {
                 console.log(err.message)
             } finally {
                 setLoading(false)
             }
         }
-        fetchProperties()
+
+        fetchProperties(searchParams)
         if (id) fetchUserProperties()
-    }, [authUser])
+    }, [authUser, searchParams])
 
     // Función para añadir propiedades
     const addProperty = async (formData) => {

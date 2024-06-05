@@ -15,14 +15,15 @@ export const useUser = (id) => {
             try {
                 setLoading(true)
                 if (!authToken) return
-                const reviews = await getUserReviewsProfileService(
-                    authToken,
-                    id
-                )
+                const res = await getUserReviewsProfileService(authToken, id)
 
-                if (!reviews) return setReviews([])
+                if (res.ok) {
+                    const body = await res.json()
 
-                setUserReviews(reviews.data)
+                    if (res.status !== 200) return setUserReviews([])
+
+                    setUserReviews(body.data)
+                }
             } catch (error) {
                 console.log(error.message)
             } finally {
@@ -35,12 +36,12 @@ export const useUser = (id) => {
             try {
                 setLoading(true)
                 if (!authToken) return
-                const user = await getUserProfileService(authToken, id)
-
-                if (!user) return
-
-                setUser(user.data.user)
-                setUserProperties(user.data.userProperties)
+                const res = await getUserProfileService(authToken, id)
+                if (res.ok) {
+                    const body = await res.json()
+                    setUser(body.data.user)
+                    setUserProperties(body.data.userProperties)
+                }
             } catch (error) {
                 console.log(error.message)
             } finally {
