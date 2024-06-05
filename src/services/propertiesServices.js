@@ -21,12 +21,7 @@ const getUserPropertiesService = async (id, token) => {
 const getPropertyDetailsService = async (id) => {
     const res = await fetch(`${APIUrl}/properties/${id}`)
 
-    if (res.status === 200) {
-        const body = await res.json()
-
-        return body
-    }
-    return
+    return res
 }
 
 const addPropertyService = async (authToken, propertyForm) => {

@@ -9,8 +9,11 @@ export const useProperty = (id) => {
         const getProperty = async () => {
             try {
                 setLoading(true)
-                const property = await getPropertyDetailsService(id)
-                setProperty(property.data)
+                const res = await getPropertyDetailsService(id)
+                if (res.ok) {
+                    const body = await res.json()
+                    setProperty(body.data)
+                }
             } catch (error) {
                 console.log(error.message)
             } finally {
