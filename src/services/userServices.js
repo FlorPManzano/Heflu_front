@@ -52,11 +52,7 @@ const getUserReviewsProfileService = async (token, id) => {
         },
     })
 
-    if (res.status === 200) {
-        const body = await res.json()
-
-        return body
-    }
+    return res
 }
 
 export {
