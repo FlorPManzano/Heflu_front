@@ -20,7 +20,6 @@ export const useCountries = () => {
     }
     useEffect(() => {
         fetchCountries()
-        console.log(countries)
     }, [])
 
     return countries
